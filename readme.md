@@ -5,8 +5,8 @@ A Reactish Web Component / Custom Elements framework
 
 ## Demos 
 
-### github 
+### Sample Component (github) 
 https://github.com/darshanmarathe/dm-cf-components
 
-### netlify 
+### Sample components Demos (netlify) 
 https://dm-cf-components.netlify.app/
