@@ -12,6 +12,8 @@ export declare abstract class Component extends HTMLElement {
     abstract Template(): any;
     BuildProps(): Promise<void>;
     get(url: string): Promise<unknown>;
+    loadScript: (id: string, url: string) => () => void;
+    loadCss: (id: string, url: string) => () => void;
     post(url: string, data: any): Promise<unknown>;
     constructor(shadow?: boolean);
     makeDynamicProps(): void;

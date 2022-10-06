@@ -46,6 +46,39 @@ export abstract class Component extends HTMLElement {
     });
   }
 
+loadScript = (id:string, url:string) => {
+      let script: HTMLScriptElement = document.getElementById(id) as HTMLScriptElement;
+      if (!script) {
+        script = document.createElement('script');
+        script.src = url;
+        script.id = id
+        script.async = false;
+      }
+  
+      document.body.appendChild(script);
+  
+      return () => {
+        document.body.removeChild(script);
+      }
+  };
+  
+  
+loadCss = (id:string, url:string) => {
+      let link: HTMLLinkElement = document.getElementById(id) as HTMLLinkElement;
+      if (!link) {
+        link = document.createElement('link');
+        link.href = url;
+        link.id = id;
+        link.rel = "stylesheet";
+      }
+  
+      document.body.appendChild(link);
+  
+      return () => {
+        document.body.removeChild(link);
+      }
+   
+  };
 
 
   post(url: string, data: any) {
