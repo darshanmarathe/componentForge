@@ -46,7 +46,7 @@ export abstract class Component extends HTMLElement {
     });
   }
 
-loadScript = (id:string, url:string) => {
+loadScript(id:string, url:string){
       let script: HTMLScriptElement = document.getElementById(id) as HTMLScriptElement;
       if (!script) {
         script = document.createElement('script');
@@ -63,7 +63,7 @@ loadScript = (id:string, url:string) => {
   };
   
   
-loadCss = (id:string, url:string) => {
+loadCss(id:string, url:string){
       let link: HTMLLinkElement = document.getElementById(id) as HTMLLinkElement;
       if (!link) {
         link = document.createElement('link');
