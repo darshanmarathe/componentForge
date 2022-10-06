@@ -66,7 +66,7 @@ loadScript(id:string, url:string){
 loadCss(id:string, url:string){
       let link: HTMLLinkElement = this.root.getElementById(id) as HTMLLinkElement;
       if (!link) {
-        link = this.root.createElement('link');
+        link = document.createElement('link');
         link.href = url;
         link.id = id;
         link.rel = "stylesheet";
