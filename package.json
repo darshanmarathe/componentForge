@@ -1,6 +1,6 @@
 {
   "name": "componentforge",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A reactish web components / custom elements building library.",
   "main": "lib/component.js",
   "scripts": {
