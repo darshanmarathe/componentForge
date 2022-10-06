@@ -3,7 +3,7 @@
 import { html, render} from 'lit-html';
 //@sealed
 export abstract class Component extends HTMLElement {
-  
+
   props: any = {};
   state: any = {};
   root: ShadowRoot | any;
@@ -54,30 +54,30 @@ loadScript(id:string, url:string){
         script.id = id
         script.async = false;
       }
-  
+
       document.body.appendChild(script);
-  
+
       return () => {
         document.body.removeChild(script);
       }
   };
-  
-  
+
+
 loadCss(id:string, url:string){
-      let link: HTMLLinkElement = document.getElementById(id) as HTMLLinkElement;
+      let link: HTMLLinkElement = this.root.getElementById(id) as HTMLLinkElement;
       if (!link) {
-        link = document.createElement('link');
+        link = this.root.createElement('link');
         link.href = url;
         link.id = id;
         link.rel = "stylesheet";
       }
-  
-      document.body.appendChild(link);
-  
+
+      this.root.appendChild(link);
+
       return () => {
-        document.body.removeChild(link);
+        this.root.removeChild(link);
       }
-   
+
   };
 
 
@@ -86,8 +86,8 @@ loadCss(id:string, url:string){
     return new Promise(async (resolve, reject) => {
 
       try {
-        // Awaiting for fetch response and 
-        // defining method, headers and body  
+        // Awaiting for fetch response and
+        // defining method, headers and body
         const response = await fetch(url, {
           method: 'POST',
           headers: {
@@ -116,7 +116,7 @@ loadCss(id:string, url:string){
     super();
     if(this.Template === undefined && this.Style === undefined) {
       throw new Error("Template and Style functions are required....");
-      
+
     }
     if(shadow){
 
@@ -128,7 +128,7 @@ loadCss(id:string, url:string){
     this.makeDynamicProps();
     this.Template.bind(this);
     this.Style.bind(this);
-   
+
     this.slotChnaged && this.slotChnaged.bind(this);
     this.root.querySelector('slot')?.addEventListener('slotchange', (e: any) => {
       this.slotChnaged && this.slotChnaged(e)
@@ -195,7 +195,7 @@ ${this.Template()}`, this.root);
 
 
   fireEvent(type: string , propName : string, value: any, bubbles = true, composed = true) {
- // @ts-ignore 
+ // @ts-ignore
     if(propName && propName != "") this[propName] = value;
     this.dispatchEvent(
       new CustomEvent(type, {
@@ -231,5 +231,3 @@ export {
   html,
   Tag
 }
-
-
