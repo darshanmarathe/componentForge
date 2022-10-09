@@ -1,4 +1,4 @@
-import { html } from 'https://unpkg.com/lit-html?module';
+import { html } from 'lit-html';
 export declare abstract class Component extends HTMLElement {
     props: any;
     state: any;

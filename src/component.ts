@@ -1,6 +1,6 @@
 // @ts-ignore
-import { html, render } from 'https://unpkg.com/lit-html?module';
-//import { html, render } from 'lit-html';
+//import { html, render } from 'https://unpkg.com/lit-html?module';
+import { html, render } from 'lit-html';
 //@sealed
 export abstract class Component extends HTMLElement {
 
