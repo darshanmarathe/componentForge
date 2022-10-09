@@ -1,6 +1,6 @@
 // @ts-ignore
-//import { html, render } from 'https://unpkg.com/lit-html?module';
-import { html, render} from 'lit-html';
+import { html, render } from 'https://unpkg.com/lit-html?module';
+//import { html, render } from 'lit-html';
 //@sealed
 export abstract class Component extends HTMLElement {
 
@@ -8,6 +8,7 @@ export abstract class Component extends HTMLElement {
   state: any = {};
   root: ShadowRoot | any;
   cssStyle: any;
+  scripts: any[] = [];
 
   abstract ComponentDidMount(): Promise<void>;
   abstract ComponentWillUnmount(): Promise<void>;
@@ -20,17 +21,21 @@ export abstract class Component extends HTMLElement {
 
   async BuildProps() {
     let keys = this.getAttributeNames();
+  
+    // @ts-ignore
     if (keys.length === 0) return;
     let props: any = {};
     for (const key of keys) {
       if (key.toLowerCase().startsWith("data-")) {
+        console.warn(this.getAttribute(key))
         let obj = JSON.parse(this.getAttribute(key) || "{}");
-        props[key.replace("data-", "")] = obj;
+        props[key.replace("data-", "")] = typeof this.getAttribute(key) ==='object' ? this.getAttribute(key) : obj;
       } else {
         props[key] = this.getAttribute(key);
       }
     }
-    this.props = props;
+    this.props = {...this.props , ...props};
+    console.warn(this.props)
   }
 
   get(url: string) {
@@ -46,37 +51,48 @@ export abstract class Component extends HTMLElement {
     });
   }
 
-loadScript(id:string, url:string){
+  loadScript(id: string, url: string) {
+    return new Promise((resolve: any, reject) => {
       let script: HTMLScriptElement = document.getElementById(id) as HTMLScriptElement;
       if (!script) {
         script = document.createElement('script');
         script.src = url;
         script.id = id
         script.async = false;
+
+      } else {
+        resolve();
       }
+
+      this.scripts.push(() => {
+        document.body.removeChild(script);
+      });
 
       document.body.appendChild(script);
 
-      return () => {
-        document.body.removeChild(script);
+      script.onload = () => {
+        resolve();
       }
+
+    })
   };
 
 
-loadCss(id:string, url:string){
-      let link: HTMLLinkElement = this.root.getElementById(id) as HTMLLinkElement;
-      if (!link) {
-        link = document.createElement('link');
-        link.href = url;
-        link.id = id;
-        link.rel = "stylesheet";
-      }
+  loadCss(id: string, url: string) {
+    let link: HTMLLinkElement = this.root.getElementById(id) as HTMLLinkElement;
+    if (!link) {
+      link = document.createElement('link');
+      link.href = url;
+      link.id = id;
+      link.rel = "stylesheet";
+    }
 
-      this.root.appendChild(link);
 
-      return () => {
-        this.root.removeChild(link);
-      }
+    this.root.appendChild(link);
+
+    this.scripts.push(() => {
+      this.root.removeChild(link);
+    });
 
   };
 
@@ -111,17 +127,29 @@ loadCss(id:string, url:string){
     });
   }
 
-  constructor(shadow = true) {
+  
+  /**
+   * Creates an instance of Component.
+   * @date 10/9/2022 - 7:42:37 PM
+   *
+   * @constructor
+   * @param {generate shadow DOM boolean} [shadow=true]
+   * @param {default props to watch {}} [_props={}]
+   */
+  constructor(shadow = true , _props = {}) {
 
     super();
-    if(this.Template === undefined && this.Style === undefined) {
+    if (this.Template === undefined && this.Style === undefined) {
       throw new Error("Template and Style functions are required....");
 
     }
-    if(shadow){
+    if(Object.keys(_props).length > 0){
+      this.props = _props
+    }
+    if (shadow) {
 
       this.root = this.attachShadow({ mode: "open" });
-    }else{
+    } else {
       this.root = this;
     }
     this.BuildProps();
@@ -185,6 +213,7 @@ ${this.Template()}`, this.root);
   }
 
   async disconnectedCallback() {
+    this.scripts.forEach((func) => func())
     this.ComponentWillUnmount && await this.ComponentWillUnmount();
   }
 
@@ -194,9 +223,9 @@ ${this.Template()}`, this.root);
   }
 
 
-  fireEvent(type: string , propName : string, value: any, bubbles = true, composed = true) {
- // @ts-ignore
-    if(propName && propName != "") this[propName] = value;
+  fireEvent(type: string, propName: string, value: any, bubbles = true, composed = true) {
+    // @ts-ignore
+    if (propName && propName != "") this[propName] = value;
     this.dispatchEvent(
       new CustomEvent(type, {
         detail: value,
@@ -221,9 +250,9 @@ ${this.Template()}`, this.root);
 /**
  * @param  {string} tagName tag name
  */
-function Tag(tagName: string , target: any) {
+function Tag(tagName: string, target: any) {
 
-    window.customElements.define(tagName, target);
+  window.customElements.define(tagName, target);
 }
 
 

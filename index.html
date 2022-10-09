@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demos</title>
+</head>
+<body>
+    <h1>Properties</h1>
+    
+<div id="container">
+
+</div>
+<!-- 
+<my-component id="mycomp" value="20"></my-component> -->
+
+
+
+    <script src="./test/props_test.js" type="module"></script>
+    <script type="module">
+
+import { html, render } from 'https://unpkg.com/lit-html?module';
+   
+    const element = document.getElementById('container');
+
+    const data = {id : 1 , name: 'hello' , age : 20}
+
+    render(html`<my-component id="mycomp" value="20" .mydata="${data}"></my-component>` , element)
+   
+    </script>
+</body>
+</html>

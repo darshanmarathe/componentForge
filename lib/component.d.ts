@@ -1,9 +1,10 @@
-import { html } from 'lit-html';
+import { html } from 'https://unpkg.com/lit-html?module';
 export declare abstract class Component extends HTMLElement {
     props: any;
     state: any;
     root: ShadowRoot | any;
     cssStyle: any;
+    scripts: any[];
     abstract ComponentDidMount(): Promise<void>;
     abstract ComponentWillUnmount(): Promise<void>;
     abstract slotChnaged(event: any): Promise<void>;
@@ -12,10 +13,18 @@ export declare abstract class Component extends HTMLElement {
     abstract Template(): any;
     BuildProps(): Promise<void>;
     get(url: string): Promise<unknown>;
-    loadScript(id: string, url: string): () => void;
-    loadCss(id: string, url: string): () => void;
+    loadScript(id: string, url: string): Promise<unknown>;
+    loadCss(id: string, url: string): void;
     post(url: string, data: any): Promise<unknown>;
-    constructor(shadow?: boolean);
+    /**
+     * Creates an instance of Component.
+     * @date 10/9/2022 - 7:42:37 PM
+     *
+     * @constructor
+     * @param {generate shadow DOM boolean} [shadow=true]
+     * @param {default props to watch {}} [_props={}]
+     */
+    constructor(shadow?: boolean, _props?: {});
     makeDynamicProps(): void;
     setState(object: any, preRender?: boolean, callback?: (() => void)): void;
     PreRender(): void;
