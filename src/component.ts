@@ -1,6 +1,9 @@
 // @ts-ignore
 //import { html, render } from 'https://unpkg.com/lit-html?module';
+//import { nsafeHTML } from 'https://unpkg.com/lit-html//directives/unsafe-html?module';
 import { html, render } from 'lit-html';
+import unsafeHTML from 'lit-html/directives/unsafe-html';
+
 //@sealed
 export abstract class Component extends HTMLElement {
 
@@ -21,7 +24,7 @@ export abstract class Component extends HTMLElement {
 
   async BuildProps() {
     let keys = this.getAttributeNames();
-  
+
     // @ts-ignore
     if (keys.length === 0) return;
     let props: any = {};
@@ -29,12 +32,12 @@ export abstract class Component extends HTMLElement {
       if (key.toLowerCase().startsWith("data-")) {
         console.warn(this.getAttribute(key))
         let obj = JSON.parse(this.getAttribute(key) || "{}");
-        props[key.replace("data-", "")] = typeof this.getAttribute(key) ==='object' ? this.getAttribute(key) : obj;
+        props[key.replace("data-", "")] = typeof this.getAttribute(key) === 'object' ? this.getAttribute(key) : obj;
       } else {
         props[key] = this.getAttribute(key);
       }
     }
-    this.props = {...this.props , ...props};
+    this.props = { ...this.props, ...props };
     console.warn(this.props)
   }
 
@@ -127,7 +130,7 @@ export abstract class Component extends HTMLElement {
     });
   }
 
-  
+
   /**
    * Creates an instance of Component.
    * @date 10/9/2022 - 7:42:37 PM
@@ -136,14 +139,14 @@ export abstract class Component extends HTMLElement {
    * @param {generate shadow DOM boolean} [shadow=true]
    * @param {default props to watch {}} [_props={}]
    */
-  constructor(shadow = true , _props = {}) {
+  constructor(shadow = true, _props = {}) {
 
     super();
     if (this.Template === undefined && this.Style === undefined) {
       throw new Error("Template and Style functions are required....");
 
     }
-    if(Object.keys(_props).length > 0){
+    if (Object.keys(_props).length > 0) {
       this.props = _props
     }
     if (shadow) {
@@ -176,12 +179,13 @@ export abstract class Component extends HTMLElement {
         Object.defineProperty(this, attribute, {
           get() { return this.getAttribute(attribute); },
           set(attrValue) {
-            console.log(attribute, attrValue);
             let oldValue = this.props[attribute];
+            console.log(attribute, oldValue, attrValue);
             if (attrValue !== undefined) {
               this.setAttribute(attribute, attrValue);
-              this.props[attribute] = attrValue
-              this.PreRender();
+              this.props[attribute] = attrValue;
+              if (oldValue !== attrValue)
+                this.PreRender();
             } else {
               this.removeAttribute(attribute);
             }
@@ -201,6 +205,42 @@ export abstract class Component extends HTMLElement {
   PreRender() {
     render(html`${this.Style()}
 ${this.Template()}`, this.root);
+  }
+
+  Tmpl(rec: any, _tempStr: string) {
+
+
+    let _template = _tempStr;
+
+    //Get Child
+    const gc = (key: string, item: any) => {
+      debugger;
+      let retItem = item;
+      const keys = key.split('.');
+      for (const _key of keys) {
+        const split = _key.split('.');
+        const newKey = split.length > 1 ? split[1] : split[0];
+        retItem = retItem[newKey]
+      }
+
+
+      return retItem;
+    }
+    const re = /{(.*?)}/g;
+
+    const tkeys = _template.match(re)
+
+    tkeys?.forEach((k) => {
+      k = k.replace('{', '').replace('}', '')
+      if (k.indexOf('.') === -1)
+        _template = _template.replace(`{${k}}`, rec[k]);
+      else
+        _template = _template.replace(`{${k}}`, gc(k, rec))
+
+    })
+
+    return unsafeHTML(_template);
+
   }
 
 

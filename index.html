@@ -26,7 +26,7 @@ import { html, render } from 'https://unpkg.com/lit-html?module';
 
     const data = {id : 1 , name: 'hello' , age : 20}
 
-    render(html`<my-component id="mycomp" value="20" .mydata="${data}"></my-component>` , element)
+    render(html`<my-component cardTmpl="id : {id} <b> {name} </b> <br> <u> age {age}  </u>" id="mycomp" value="20" .mydata="${data}"></my-component>` , element)
    
     </script>
 </body>

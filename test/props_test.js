@@ -20,7 +20,8 @@ constructor(){
                 })}
             </ul>
 
-            ${this.props.mydata.id} ${this.props.mydata.name} ${this.props.mydata.age}`
+           ${this.Tmpl(this.props.mydata , this.props.cardtmpl)}
+           `
     }
 
     Style(){
