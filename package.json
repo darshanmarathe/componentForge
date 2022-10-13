@@ -1,6 +1,6 @@
 {
   "name": "componentforge",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "A reactish web components / custom elements building library.",
   "main": "lib/component.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "config": "tsc --showConfig",
     "build": "tsc",
     "prepublish": "npm-bump patch",
-    "publish" : "tsc"
+    "publish": "tsc"
   },
   "repository": {
     "type": "git",

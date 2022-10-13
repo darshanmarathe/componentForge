@@ -2,7 +2,7 @@
 //import { html, render } from 'https://unpkg.com/lit-html?module';
 //import { nsafeHTML } from 'https://unpkg.com/lit-html//directives/unsafe-html?module';
 import { html, render } from 'lit-html';
-import unsafeHTML from 'lit-html/directives/unsafe-html';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html';
 
 //@sealed
 export abstract class Component extends HTMLElement {
