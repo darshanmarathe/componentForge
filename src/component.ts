@@ -1,8 +1,8 @@
 // @ts-ignore
-//import { html, render } from 'https://unpkg.com/lit-html?module';
-//import { nsafeHTML } from 'https://unpkg.com/lit-html//directives/unsafe-html?module';
+// import { html, render } from 'https://unpkg.com/lit-html?module';
+// import { unsafeHTML } from 'https://unpkg.com/lit-html/directives/unsafe-html?module';
 import { html, render } from 'lit-html';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html';
+// import {unsafeHTML} from 'lit-html/directives/unsafe-html';
 
 //@sealed
 export abstract class Component extends HTMLElement {
@@ -214,7 +214,7 @@ ${this.Template()}`, this.root);
 
     //Get Child
     const gc = (key: string, item: any) => {
-      debugger;
+
       let retItem = item;
       const keys = key.split('.');
       for (const _key of keys) {
@@ -239,7 +239,7 @@ ${this.Template()}`, this.root);
 
     })
 
-    return unsafeHTML(_template);
+    return _template;
 
   }
 

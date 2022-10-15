@@ -28,7 +28,7 @@ export declare abstract class Component extends HTMLElement {
     makeDynamicProps(): void;
     setState(object: any, preRender?: boolean, callback?: (() => void)): void;
     PreRender(): void;
-    Tmpl(rec: any, _tempStr: string): import("lit-html/directive").DirectiveResult<typeof import("lit-html/directives/unsafe-html").UnsafeHTMLDirective>;
+    Tmpl(rec: any, _tempStr: string): string;
     Log(...args: any[]): void;
     connectedCallback(): Promise<void>;
     disconnectedCallback(): Promise<void>;
