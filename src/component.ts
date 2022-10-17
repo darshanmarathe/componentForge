@@ -1,8 +1,9 @@
 // @ts-ignore
 // import { html, render } from 'https://unpkg.com/lit-html?module';
 // import { unsafeHTML } from 'https://unpkg.com/lit-html/directives/unsafe-html?module';
+
 import { html, render } from 'lit-html';
-// import {unsafeHTML} from 'lit-html/directives/unsafe-html';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html';
 
 //@sealed
 export abstract class Component extends HTMLElement {
@@ -161,9 +162,12 @@ export abstract class Component extends HTMLElement {
     this.Style.bind(this);
 
     this.slotChnaged && this.slotChnaged.bind(this);
-    this.root.querySelector('slot')?.addEventListener('slotchange', (e: any) => {
-      this.slotChnaged && this.slotChnaged(e)
-      this.ComponentDidMount && this.ComponentDidMount();
+    this.root.querySelectorAll('slot')?.forEach((slot: any) => {
+      slot.addEventListener('slotchange', (e: any) => {
+        console.warn(e)
+        this.slotChnaged && this.slotChnaged(e)
+        this.ComponentDidMount && this.ComponentDidMount();
+      })
     });
     setTimeout(() => {
       this.PreRender();
@@ -239,7 +243,7 @@ ${this.Template()}`, this.root);
 
     })
 
-    return _template;
+    return unsafeHTML(_template);
 
   }
 

@@ -7,7 +7,7 @@
     <title>Demos</title>
 </head>
 <body>
-    <h1>Properties</h1>
+    <h1>ComponentFoge Components</h1>
     
 <div id="container">
 
@@ -15,11 +15,18 @@
 <!-- 
 <my-component id="mycomp" value="20"></my-component> -->
 
+<t-display id="disp1" title="Countries" litemplate="<t-bold record='{record}'></t-bold> ">
+
+   
+
+</t-display>
 
 
     <script src="./test/props_test.js" type="module"></script>
     
     <script src="./test/Autocomplete.js" type="module"></script>
+
+    <script src="./test/html_child.js" type="module"></script>
     <script type="module">
 
 import { html, render } from 'https://unpkg.com/lit-html?module';
@@ -28,18 +35,30 @@ import { html, render } from 'https://unpkg.com/lit-html?module';
 
     const data = {id : 1 , name: 'hello' , age : 20}
 
+    const simpleRecs = [
+        "india",
+        "united kinddom",
+        "united state",
+        "nepal"
+    ]
+
+    setTimeout(() => {
+        document.getElementById('disp1').records = simpleRecs;
+}, 50);
+
    // render(html`<my-component cardTmpl="id : {id} <b> {name} </b> <br> <u> age {age}  </u>" id="mycomp" value="20" .mydata="${data}"></my-component>` , element)
-    render(html`
-        <p>Type "clem" and wait</p>
-    <dm-auto-complete url="https://jsonplaceholder.typicode.com/users"
-    .mincharAjax=${2}
+    // render(html`
+    //     <p>Type "clem" and wait</p>
+    // <dm-auto-complete url="https://jsonplaceholder.typicode.com/users"
+    // .mincharAjax=${2}
    
-    textprop="name"
-    keyprop="username"
-    placeholder="Users"
-    template="{username} - {name} <br> {company.name}"
+    // textprop="name"
+    // keyprop="username"
+    // placeholder="Users"
+    // template="{username} - {name} <br> {company.name}"
   
-    ></dm-auto-complete>` , element)
+    // ></dm-auto-complete>` , element)
+    //render(html`<my-component cardTmpl="id : {id} <b> {name} </b> <br> <u> age {age}  </u>" id="mycomp" value="20" .mydata="${data}"></my-component>` , element)
    
     </script>
 </body>
