@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ComponentForge - Playground</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  </head>
+  <body>
+    <ul>
+      <li><a href="./Home.html">Home</a></li>
+      <li><a href="./Playground.html">Playground</a></li>
+      <li>About</li>
+    </ul>
+
+
+    <div>
+        <div class="row">
+            <div class="col-6">
+                <button id="run" class="btn btn-primary" style="float: right;">Run</button>
+                <select class="form-control" style="width: 80%" name="code" id="code">
+                    <option value="">Select</option>
+                    
+                  </select>
+              
+            </div>
+            <div class="col-6">
+                Preview
+            </div>
+        </div>
+      <div class="row">
+        <div class="col-6">
+          <code-editor id="codeEditor"></code-editor>
+        </div>
+        <div class="col-6">
+
+            <div id="htmlcontainer">
+<my-component></my-component>
+            </div>
+
+
+            <script id="jsContainer">
+
+            </script>
+        </div>
+      </div>
+    </div>
+
+    <pre class="hidden" id="basic">
+function Basic(){
+    document.querySelector('#htmlcontainer').innerHTML  = "Hello world";
+}
+
+Basic();
+
+    </pre>
+
+    <pre class="hidden" id="advanced">
+    function Advanced(){
+
+    }
+    </pre>
+
+    <pre class="hidden" id="closure">
+        function Clouse(){
+    
+        }
+        </pre>
+
+        
+    <pre class="hidden" id="webcomponent" title="Web Component">
+
+
+        import {Component , html , Tag} from './js/componentforge.js'
+
+export default class MyComponent extends Component{
+    
+
+constructor(){
+  const  _props ={
+        mydata : ""
+    } 
+    super(true , _props)
+}
+    Template(){
+
+        return html`
+         <h2>Hello world</h2>
+           `
+    }
+
+    Style(){
+        return html`
+        <style>
+            h2{
+                color:red
+            }
+        
+        </style>
+        `
+    }
+
+}
+
+Tag('my-component' , MyComponent)
+        
+        </pre>
+    <script src="./js/codeeditor.js" type="module"></script>
+<script type="module" id="jscode">
+    import {Component , html , Tag} from './js/componentforge.js'
+</script>
+    <script>
+
+
+      $(function () {
+        let strOptions = $("#code").html();
+
+        $("pre").each(function () {
+          const str = ` <option value="${$(this).prop('id')}">${
+            $(this).prop("title") || $(this).prop("id")
+          }</option>`;
+          strOptions += str;
+        });
+
+        $("#code").html(strOptions);
+        document.querySelector("#code").addEventListener("change", (e) => {
+          const codeContainer = "#" + e.target.value;
+          const code = document.querySelector(codeContainer).innerHTML;
+          debugger;
+          document.querySelector("#codeEditor").value = code;
+        });
+
+        $('#run').click((e) => {
+            e.preventDefault();
+            const code = document.querySelector('#codeEditor').Code;
+            $('jscode').text(code)
+          eval(code)
+
+        })
+      });
+    </script>
+  </body>
+</html>
