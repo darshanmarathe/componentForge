@@ -4,21 +4,21 @@ export default class CodeEditor extends Component {
   editor = null;
   constructor() {
     const _props = {
-      value: `function x() {
-            alert("Hello world!");
-          }
-          x()
-          `,
+      value: `
+      //Type your code here....`,
       language: "javascript",
       theme: "vs-dark",
+
+      lineNumbers: "on",
+      roundedSelection: true,
+      scrollBeyondLastLine: false,
+      readOnly: false,
     };
     super(true, _props);
-
-    
   }
 
-  get Code(){
-    return this.editor.getValue() || '';
+  get Code() {
+    return this.editor.getValue() || "";
   }
 
   ComponentDidMount() {
@@ -27,11 +27,10 @@ export default class CodeEditor extends Component {
 
   ComponentDidReceiedProps(attribute, oldValue, attrValue) {
     console.warn(attribute, attrValue);
-    if(attribute === "value")  
-        this.editor.setValue(attrValue)
-  else
-    this.editor.updateOptions({
-       value:'abc'
+    if (attribute === "value") this.editor.setValue(attrValue);
+    else
+      this.editor.updateOptions({
+        attribute: attrValue,
       });
   }
 
@@ -62,9 +61,7 @@ export default class CodeEditor extends Component {
       this.editor = monaco.editor.create(
         this.root.querySelector(".monaco-editor-container"),
         {
-          value: this.props.value,
-          language: this.props.language,
-          theme: this.props.theme,
+          ...this.props
         }
       );
     });

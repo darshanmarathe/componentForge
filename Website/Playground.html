@@ -21,35 +21,28 @@
       <li>About</li>
     </ul>
 
-
     <div>
-        <div class="row">
-            <div class="col-6">
-                <button id="run" class="btn btn-primary" style="float: right;">Run</button>
-                <select class="form-control" style="width: 80%" name="code" id="code">
-                    <option value="">Select</option>
-                    
-                  </select>
-              
-            </div>
-            <div class="col-6">
-                Preview
-            </div>
+      <div class="row">
+        <div class="col-6">
+          <button id="run" class="btn btn-primary" style="float: right">
+            Run
+          </button>
+          <select class="form-control" style="width: 80%" name="code" id="code">
+            <option value="">Select</option>
+          </select>
         </div>
+        <div class="col-6">Preview</div>
+      </div>
       <div class="row">
         <div class="col-6">
           <code-editor id="codeEditor"></code-editor>
         </div>
         <div class="col-6">
+          <div id="htmlcontainer">
+            <my-component name="Darshan"></my-component>
+          </div>
 
-            <div id="htmlcontainer">
-<my-component></my-component>
-            </div>
-
-
-            <script id="jsContainer">
-
-            </script>
+          <div id="jsContainer" type="module"></div>
         </div>
       </div>
     </div>
@@ -73,13 +66,13 @@ Basic();
         function Clouse(){
     
         }
-        </pre>
+        </pre
+    >
 
-        
     <pre class="hidden" id="webcomponent" title="Web Component">
 
+   //   import {Component , html , Tag} from './js/componentforge.js'
 
-        import {Component , html , Tag} from './js/componentforge.js'
 
 export default class MyComponent extends Component{
     
@@ -114,17 +107,17 @@ Tag('my-component' , MyComponent)
         
         </pre>
     <script src="./js/codeeditor.js" type="module"></script>
-<script type="module" id="jscode">
-    import {Component , html , Tag} from './js/componentforge.js'
-</script>
-    <script>
 
-
+    <script type="module">
+      import { Component, html, Tag } from "./js/componentforge.js";
+      window.Component = Component;
+      window.html = html;
+      window.Tag = Tag;
       $(function () {
         let strOptions = $("#code").html();
 
         $("pre").each(function () {
-          const str = ` <option value="${$(this).prop('id')}">${
+          const str = ` <option value="${$(this).prop("id")}">${
             $(this).prop("title") || $(this).prop("id")
           }</option>`;
           strOptions += str;
@@ -134,17 +127,32 @@ Tag('my-component' , MyComponent)
         document.querySelector("#code").addEventListener("change", (e) => {
           const codeContainer = "#" + e.target.value;
           const code = document.querySelector(codeContainer).innerHTML;
-          debugger;
+
           document.querySelector("#codeEditor").value = code;
         });
 
-        $('#run').click((e) => {
-            e.preventDefault();
-            const code = document.querySelector('#codeEditor').Code;
-            $('jscode').text(code)
-          eval(code)
+        $("#run").click((e) => {
+          e.preventDefault();
 
-        })
+          let jsCode =
+            "data:text/javascript;charset=utf-8," +
+            document.querySelector("#codeEditor").Code;
+          //let jsCode = document.querySelector('#codeEditor').Code;
+
+          //const url = URL.createObjectURL(new Blob([jsCode]))
+          const script = document.createElement("script");
+          script.type = "module";
+          script.innerHTML = jsCode;
+          import(jsCode);
+          $("#jsContainer").append(script);
+          var htmlCon = document.querySelector("#htmlcontainer");
+          const html = htmlCon.innerHTML;
+          htmlCon.innerHTML = "";
+
+          setTimeout(() => {
+            htmlCon.innerHTML = html;
+          }, 1000);
+        });
       });
     </script>
   </body>

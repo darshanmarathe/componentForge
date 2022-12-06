@@ -232,6 +232,7 @@ export class Component extends HTMLElement {
  * @param  {string} tagName tag name
  */
 function Tag(tagName, target) {
+
   window.customElements.define(tagName, target);
 }
 export { html, Tag, unsafeHTML };
