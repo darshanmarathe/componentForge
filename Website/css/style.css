@@ -1,0 +1,16 @@
+.hidden{
+    display: none;
+}
+
+
+.bold{
+    font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
+
+.box{
+   padding:20px;
+}
