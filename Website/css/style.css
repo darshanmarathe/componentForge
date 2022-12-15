@@ -3,7 +3,14 @@
 }
 
 
-.col-6
-{
-    border:1px solid gray;
+.bold{
+    font-weight: bold;
+}
+
+.center {
+  text-align: center;
+}
+
+.box{
+   padding:20px;
 }
