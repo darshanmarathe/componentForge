@@ -1,65 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demos</title>
-</head>
-<body>
-    <h1>ComponentFoge Components</h1>
-    
-<div id="container">
+<script>
 
-</div>
-<!-- 
-<my-component id="mycomp" value="20"></my-component> -->
+    // Simulate an HTTP redirect:
+window.location.replace(window.location.href + "/Website");
 
-<t-display id="disp1" title="Countries" litemplate="<t-bold record='{record}'></t-bold> ">
-
-   
-
-</t-display>
-
-
-    <script src="./test/props_test.js" type="module"></script>
-    
-    <script src="./test/Autocomplete.js" type="module"></script>
-
-    <script src="./test/html_child.js" type="module"></script>
-    <script type="module">
-
-import { html, render } from 'https://unpkg.com/lit-html?module';
-   
-    const element = document.getElementById('container');
-
-    const data = {id : 1 , name: 'hello' , age : 20}
-
-    const simpleRecs = [
-        "india",
-        "united kinddom",
-        "united state",
-        "nepal"
-    ]
-
-    setTimeout(() => {
-        document.getElementById('disp1').records = simpleRecs;
-}, 50);
-
-   // render(html`<my-component cardTmpl="id : {id} <b> {name} </b> <br> <u> age {age}  </u>" id="mycomp" value="20" .mydata="${data}"></my-component>` , element)
-    // render(html`
-    //     <p>Type "clem" and wait</p>
-    // <dm-auto-complete url="https://jsonplaceholder.typicode.com/users"
-    // .mincharAjax=${2}
-   
-    // textprop="name"
-    // keyprop="username"
-    // placeholder="Users"
-    // template="{username} - {name} <br> {company.name}"
-  
-    // ></dm-auto-complete>` , element)
-    //render(html`<my-component cardTmpl="id : {id} <b> {name} </b> <br> <u> age {age}  </u>" id="mycomp" value="20" .mydata="${data}"></my-component>` , element)
-   
     </script>
-</body>
-</html>
