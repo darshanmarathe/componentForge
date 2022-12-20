@@ -17,6 +17,12 @@ app.get('/play', (req, res) => {
   res.sendFile(__dirname + '/play.html');
 });
 
+app.get('/health', (req, res) => {
+  res.statusCode = 200;
+  res.send("OK")
+});
+
+
 app.post('/preview', (req, res) => {
   console.clear();
 
