@@ -1,13 +1,13 @@
 {
   "name": "componentforge",
-  "version": "1.1.12",
+  "version": "1.1.13",
   "description": "A reactish web components / custom elements building library.",
   "main": "lib/component.js",
   "scripts": {
     "dev": "tsc --watch",
     "config": "tsc --showConfig",
+    "prebuild": "npm-bump patch",
     "build": "tsc",
-    "prepublish": "npm-bump patch",
     "publish": "tsc"
   },
   "repository": {

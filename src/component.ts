@@ -208,11 +208,13 @@ export abstract class Component extends HTMLElement {
   }
 
   PreRender() {
-    render(html`${this.Style()}
-${this.Template()}`, this.root);
+    render(
+      html`${this.Style()}
+${this.Template()}`, 
+this.root);
   }
 
-  Tmpl(rec: any, _tempStr: string) {
+  Tmpl(rec: any, _tempStr: string, elem:HTMLElement = null) {
 
 
     let _template = _tempStr;
@@ -243,6 +245,11 @@ ${this.Template()}`, this.root);
         _template = _template.replace(`{${k}}`, gc(k, rec))
 
     })
+    
+    if(elem !== null){
+          // @ts-ignore
+          elem['innerHTML'] = unsafeHTML(_template);
+    }
 
     return unsafeHTML(_template);
 
