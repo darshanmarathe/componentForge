@@ -66,6 +66,7 @@ export abstract class Component extends HTMLElement {
 
       } else {
         resolve();
+        return;
       }
 
       this.scripts.push(() => {
