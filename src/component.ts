@@ -214,7 +214,7 @@ ${this.Template()}`,
 this.root);
   }
 
-  Tmpl(rec: any, _tempStr: string, elem:HTMLElement = null) {
+  Tmpl(rec: any, _tempStr: string, elem = null) {
 
 
     let _template = _tempStr;
@@ -245,7 +245,7 @@ this.root);
         _template = _template.replace(`{${k}}`, gc(k, rec))
 
     })
-    
+
     if(elem !== null){
           // @ts-ignore
           elem['innerHTML'] = unsafeHTML(_template);
