@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'https://unpkg.com/lit-html?module';
 export declare abstract class Component extends HTMLElement {
     props: any;
     state: any;
@@ -28,7 +28,7 @@ export declare abstract class Component extends HTMLElement {
     makeDynamicProps(): void;
     setState(object: any, preRender?: boolean, callback?: (() => void)): void;
     PreRender(): void;
-    Tmpl(rec: any, _tempStr: string, elem?: null): import("lit-html/directive").DirectiveResult<typeof import("lit-html/directives/unsafe-html").UnsafeHTMLDirective>;
+    Tmpl(rec: any, _tempStr: string, elem?: null): any;
     Log(...args: any[]): void;
     connectedCallback(): Promise<void>;
     disconnectedCallback(): Promise<void>;
