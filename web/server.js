@@ -1,3 +1,4 @@
+console.clear()
 const express = require('express');
 const app = express();
 var bodyParser = require('body-parser');
@@ -70,18 +71,20 @@ app.post('/preview', (req, res) => {
         result.scrollTop = result.scrollHeight;
         console.errorx(message)
     };
-    ${req.body.js}
 
+    ${req.body.wc.replace(";" , ";\n")}
+
+    ${req.body.js}
     
     </script>
 
         ${req.body.html}
 
-     
 
     <div id="result"></div>
     
     `;
+
   res.send(html);
 });
 

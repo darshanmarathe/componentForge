@@ -33,9 +33,9 @@
                     Preview
                     <input id="run" class="btn btn-primary" type="submit" value="Run">
 
-                    <input type="hidden" name="html" value="<cf-basic name='marathe'> WC </cf-basic>">
-                    <input type="hidden" name="js" id="hidjs">
-
+                    <input type="text" placeholder="html" name="html" id="hidhtml">
+                    <input type="text" placeholder="wc" name="wc" id="hidwc">
+                    <input type="text" placeholder="js" name="js" id="hidjs">
 
 
 
@@ -62,7 +62,7 @@
                             <input type="radio" id="tab-2" name="tabby-tabs">
                             <label for="tab-2">HTML</label>
                             <div class="tabby-content">
-                                <!-- <code-editor id="codeEditorHTML"></code-editor> -->
+                                <code-editor language="html" id="codeEditorHTML"></code-editor>
                             </div>
                         </div>
 
@@ -70,7 +70,7 @@
                             <input type="radio" id="tab-3" name="tabby-tabs">
                             <label for="tab-3">Page JS</label>
                             <div class="tabby-content">
-                                <!-- <code-editor id="codeEditorJS"></code-editor> -->
+                                <code-editor id="codeEditorJS"></code-editor>
                             </div>
                         </div>
 
@@ -93,13 +93,43 @@
     </div>
 
     <pre class="hidden" id="basic">
-        function Basic(){
-            console.log('helllooo.......')
-         }
-         
-         Basic();
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
+
+
+export default class Basic extends Component {
+    Template(){
+        return html`Hello ${this.props.name || 'world'}
+        <br>
+        You are cool 
+        
+        `
+    }
+
+    Style(){
+        return ''
+    }
+}
+
+
+Tag('cf-basic' , Basic)
          
     </pre>
+    
+    <pre class="hidden" id="basicHTML">
+        <cf-basic id="basic"></cf-basic>
+    </pre>
+
+
+    <pre class="hidden" id="basicJS">
+        function doSomething(){
+            setTimeout(function(){
+                    document.getElementById('basic').name ="DoSomething"
+            }, 2000)
+        }
+        
+        doSomething();
+            </pre>
+        
 
     <pre class="hidden" id="scrolltobottom" title="Scroll to Bottom">
         
@@ -190,28 +220,32 @@ Tag('cf-basic' , MyComponent)
             $("#code").html(strOptions);
             document.querySelector("#code").addEventListener("change", (e) => {
                 const codeContainer = "#" + e.target.value;
-                const code = document.querySelector(codeContainer).innerHTML;
-
+                let code = document.querySelector(codeContainer).innerHTML;
                 document.querySelector("#codeEditor").value = code;
+
+                const codeContainerHTML = codeContainer + "HTML" ;
+                 code = document.querySelector(codeContainerHTML)?.innerHTML;
+                document.querySelector("#codeEditorHTML").value = code;
+
+                const codeContainerJS = codeContainer + "JS" ;
+                 code = document.querySelector(codeContainerJS)?.innerHTML;
+                document.querySelector("#codeEditorJS").value = code;
+
+
             });
 
             $("#run").click((e) => {
 
 
-                $('#hidjs').val(document.querySelector("#codeEditor").Code)
+                $('#hidwc').val(document.querySelector("#codeEditor").Code || "")
 
-
-                // $.post('preview', {
-                //     "html": "<cf-basic name='marathe'> WC </cf-basic>",
-                //     "js":  document.querySelector("#codeEditor").Code
-                // }, (data) => {
-                //     console.log(data)
-                //     $('#prev').html(data);  
-                // }
-                // )
+                $('#hidjs').val(document.querySelector("#codeEditorJS").Code || "")
+                
+                $('#hidhtml').val(document.querySelector("#codeEditorHTML").Code || "")
+              
 
             });
-        }); x
+        }); 
 
 
 

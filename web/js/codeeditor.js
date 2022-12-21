@@ -4,8 +4,7 @@ export default class CodeEditor extends Component {
   editor = null;
   constructor() {
     const _props = {
-      value: `
-      //Type your code here....`,
+      value: `//Type your code here....`,
       language: "javascript",
       theme: "vs-dark",
 
@@ -39,39 +38,44 @@ export default class CodeEditor extends Component {
       "loader",
       "https://unpkg.com/monaco-editor@latest/min/vs/loader.js"
     );
-    require.config({
-      paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" },
-    });
-
-    // Before loading vs/editor/editor.main, define a global MonacoEnvironment that overwrites
-    // the default worker url location (used when creating WebWorkers). The problem here is that
-    // HTML5 does not allow cross-domain web workers, so we need to proxy the instantiation of
-    // a web worker through a same-domain script
-    window.MonacoEnvironment = {
-      getWorkerUrl: function (workerId, label) {
-        return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
-         self.MonacoEnvironment = {
-           baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
-         };
-         importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');`)}`;
-      },
-    };
-
-    require(["vs/editor/editor.main"], () => {
-      this.editor = monaco.editor.create(
-        this.root.querySelector(".monaco-editor-container"),
-        {
-          ...this.props
-        }
-      );
-    });
+   const inter = setInterval(() => {
+    if(require){
+      require.config({
+        paths: { vs: "https://unpkg.com/monaco-editor@latest/min/vs" },
+      });
+  
+      // Before loading vs/editor/editor.main, define a global MonacoEnvironment that overwrites
+      // the default worker url location (used when creating WebWorkers). The problem here is that
+      // HTML5 does not allow cross-domain web workers, so we need to proxy the instantiation of
+      // a web worker through a same-domain script
+      window.MonacoEnvironment = {
+        getWorkerUrl: function (workerId, label) {
+          return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
+           self.MonacoEnvironment = {
+             baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
+           };
+           importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');`)}`;
+        },
+      };
+  
+      require(["vs/editor/editor.main"], () => {
+        console.log(this.props)
+        this.editor = monaco.editor.create(
+          this.root.querySelector(".monaco-editor-container"),
+          {
+            ...this.props
+          }
+        );
+      });
+      clearInterval(inter)
+    }
+   }, 1000);
   }
 
   Template() {
     return html`
       <div>
         <div class="monaco-editor-container" style="height:600px">
-          code editor
         </div>
       </div>
     `;
