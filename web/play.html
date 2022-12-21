@@ -93,7 +93,7 @@
     </div>
 
     <pre class="hidden" id="basic">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.17';
 
 
 export default class Basic extends Component {
@@ -115,12 +115,12 @@ Tag('cf-basic' , Basic)
          
     </pre>
     
-    <pre class="hidden" id="basicHTML">
+    <pre class="hidden noShow" id="basicHTML">
         <cf-basic id="basic"></cf-basic>
     </pre>
 
 
-    <pre class="hidden" id="basicJS">
+    <pre class="hidden noShow" id="basicJS">
         function doSomething(){
             setTimeout(function(){
                     document.getElementById('basic').name ="DoSomething"
@@ -131,77 +131,79 @@ Tag('cf-basic' , Basic)
             </pre>
         
 
-    <pre class="hidden" id="scrolltobottom" title="Scroll to Bottom">
+    <pre class="hidden" id="PropsAndState" title="Props and state">
+
+      
+        import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.17';
+
+
+        export default class CountDown extends Component{
+            
         
- let item = 0
- function Advanced(){
-console.log("Hello " + item++)
- }
+        constructor(){
+          const  _props ={
+                count : 0
+            };
+            super(true , _props);
+            this.state = {
+                count: +this.props.count
+            };
 
+            this.Init.bind(this);
 
- setInterval(function() {Advanced()} , 1000)
-    </pre>
-
-    <pre class="hidden" id="closure">
-
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge'
-
-
-export default class Basic extends Component {
-    Template(){
-        return html`Hello ${this.props.name || 'world'}
-        <br>
-        You are cool 
+            this.Init();
+        }
         
-        `
-    }
-
-    Style(){
-        return ''
-    }
-}
-
-
-Tag('cf-basic' , Basic)
-        </pre>
-
-    <pre class="hidden" id="webcomponent" title="Web Component">
-
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge'
-
-
-export default class MyComponent extends Component{
-    
-
-constructor(){
-  const  _props ={
-        mydata : ""
-    } 
-    super(true , _props)
-}
-    Template(){
-
-        return html`
-         <h2>Hello world</h2>
-           `
-    }
-
-    Style(){
-        return html`
-        <style>
-            h2{
-                color:red
+        
+        Init(){
+            const that = this;
+            const inter = setInterval(function() {
+                that.setState({
+                    count : that.state.count--
+                })
+                if(that.state.count === 0) 
+                    clearInterval(inter);
+            }, 1000)
+        }
+        
+            Template(){
+        
+                return html`
+                 <h2>${this.state.count}</h2>
+                   `
             }
         
-        </style>
-        `
-    }
-
-}
-
-Tag('cf-basic' , MyComponent)
+            Style(){
+                return html`
+                <style>
+                    h2{
+                        color:red
+                    }
+                
+                </style>
+                `
+            }
+        
+        }
+        
+        Tag("cf-countdown" , CountDown)
+        
+                
+        
+        
+        
+        
+        
+                
         
         </pre>
+
+
+        <pre class="hidden noShow" id="PropsAndStateHTML">
+
+  <cf-countdown count="20"></cf-countdown>
+                    
+                    </pre>
     <script src="./js/codeeditor.js" type="module"></script>
 
     <script type="module">
@@ -212,6 +214,7 @@ Tag('cf-basic' , MyComponent)
             let strOptions = $("#code").html();
 
             $("pre").each(function () {
+                if($(this).hasClass("noShow")) return;
                 const str = ` <option value="${$(this).prop("id")}">${$(this).prop("title") || $(this).prop("id")
                     }</option>`;
                 strOptions += str;
