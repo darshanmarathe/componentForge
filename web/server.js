@@ -53,21 +53,21 @@ app.post('/preview', (req, res) => {
     <script type="module">
     console.logx = console.log;
     const result = document.getElementById('result')
-    console.log = function(message) {
-        result.innerHTML +="<div class='log'>" +  JSON.stringify(message , null , ' ') + " </div><hr>";
+    console.log = function(...message) {
+        result.innerHTML +="<div class='log'>" +  JSON.stringify(message.join(",") , null , ' ') + " </div><hr>";
         result.scrollTop = result.scrollHeight;
         console.logx(message)
     };
     console.warnx = console.warn;
-    console.warn = function(message) {
-        result.innerHTML += "<div class='warn'>" + JSON.stringify(message , null , ' ') + " </div><hr>";
+    console.warn = function(...message) {
+        result.innerHTML += "<div class='warn'>" + JSON.stringify(message.join(",") , null , ' ') + " </div><hr>";
         result.scrollTop = result.scrollHeight;
         console.warnx(message)
     };
 
     console.errorx = console.error;
-    console.error = function(message) {
-        result.innerHTML += "<div class='error'>" + JSON.stringify(message , null , ' ') + " </div><hr>";
+    console.error = function(...message) {
+        result.innerHTML += "<div class='error'>" + JSON.stringify(message.join(",") , null , ' ') + " </div><hr>";
         result.scrollTop = result.scrollHeight;
         console.errorx(message)
     };

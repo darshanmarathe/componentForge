@@ -632,6 +632,74 @@ Tag('cf-todos' , Todos)
     <cf-todos id="todos" url="https://jsonplaceholder.typicode.com/todos"></cf-todos>
     
 </pre>
+
+
+<textarea class="hidden" id="LifeCycle" title="Component Life Cycle">
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+
+    export default class LifeCycle extends Component {
+
+        constructor(){
+            const _props = {
+                name: "World"
+            }
+            super(true , _props)
+            console.log("constructor")
+        }
+        ComponentDidMount(){
+             console.log("ComponentDidMount")
+        }
+
+        ComponentWillUnmount(){
+            console.log('ComponentWillUnmount')
+        }
+
+        ComponentDidReceiedProps(propName, oldValue, newValue){
+            console.log( "ComponentDidReceiedProps", propName, oldValue, newValue)
+        }
+        Template(){
+            return html`Hello ${this.props.name || 'world'}
+            <br>
+            You are cool 
+            
+            `
+        }
+    
+        Style(){
+            return ''
+        }
+    }
+    
+    
+    Tag('cf-lifecycle' , LifeCycle)
+             
+
+
+</textarea>
+
+<pre class="hidden" id="LifeCycleHTML">
+    <cf-lifecycle id="life"></cf-lifecycle>
+</pre>
+
+<pre class="hidden" id="LifeCycleJS">
+      
+       
+var life =  document.getElementById("life");
+setTimeout(() => {
+   life.name= "Darshan"
+} , 3000)
+
+setTimeout(() => {
+    life.remove()
+} , 5000)
+
+    
+</pre>
+
+<textarea class="hidden" id="Slots" title="Slots">
+// Examples are in dev
+
+</textarea>
     <script src="./js/codeeditor.js" type="module"></script>
 
     <script type="module">
