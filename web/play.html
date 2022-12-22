@@ -584,6 +584,54 @@ console.log(document.getElementById('countDown').getState())
     ></dm-auto-complete>`;
 </pre>
 
+
+
+<textarea class="hidden" id="AJAX" title="Built in Get and Post">
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+
+
+export default class Todos extends Component {
+  
+    async ComponentDidMount(){
+      const todos  = await this.get(this.props.url)
+      console.log(todos)
+      this.setState({todos})
+    }
+  
+    Template(){
+        if(this.state.todos){
+            return html`
+              ${this.state.todos.map(t => {
+                return html`<div>
+                
+                    ${t.title}
+                    <hr>
+                </div>`
+              })}
+            `
+        }
+        return html`
+        Loading from ${this.props.url}
+        `
+    }
+
+    Style(){
+        return ''
+    }
+}
+
+
+Tag('cf-todos' , Todos)
+         
+    
+             
+        
+</textarea>
+
+<pre class="hidden noShow" id="AJAXHTML">
+    <cf-todos id="todos" url="https://jsonplaceholder.typicode.com/todos"></cf-todos>
+    
+</pre>
     <script src="./js/codeeditor.js" type="module"></script>
 
     <script type="module">
