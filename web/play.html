@@ -92,8 +92,8 @@
     </div>
     </div>
 
-    <pre class="hidden" id="basic">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.17';
+    <textarea class="hidden" id="basic">
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
 
 
 export default class Basic extends Component {
@@ -113,7 +113,7 @@ export default class Basic extends Component {
 
 Tag('cf-basic' , Basic)
          
-    </pre>
+    </textarea>
     
     <pre class="hidden noShow" id="basicHTML">
         <cf-basic id="basic" name="john"></cf-basic>
@@ -131,8 +131,8 @@ Tag('cf-basic' , Basic)
             </pre>
         
 
-    <pre class="hidden" id="PropsAndState" title="Props and state">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.17';
+    <textarea class="hidden" id="PropsAndState" title="Props and state">
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
 
 
 export default class CountDown extends Component{
@@ -191,7 +191,7 @@ Init(){
 
 Tag("cf-countdown" , CountDown)
         
-        </pre>
+    </textarea>
 
 
 <pre class="hidden noShow" id="PropsAndStateHTML">
@@ -205,16 +205,71 @@ Tag("cf-countdown" , CountDown)
 
 document.getElementById('countDown')
 .addEventListener('tick' , function(e) {
-console.log(e.detail)
+console.log(e.detail);
+console.log(document.getElementById('countDown').getState())
 })
                     
 </pre>
 
 
-<pre class="hidden" id="Events" title="Fire events">
-    // Yet to come
+<textarea class="hidden" id="Events" title="Fire events">
+    import { Component, html , Tag }  from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
 
+    export default class Counter extends Component {
+    
+        Template() {
+            return html`<b>Counter :</b>  ${this.state.count} <br>
+                <button @click=${(e) => this.AddCount()}>+</button>
+                <button @click=${(e) => this.SubCount()}>-</button>
+            `
+        }
+    
+        constructor(){
+            super()
+            this.state = {
+                count : +this.props.count || 0
+            };
+        }   
+    
+        AddCount(){
+            this.setState({count : this.state.count +1 })
+            this.fireEvent('change' , 'count' , this.state.count)
+        }
+    
+        SubCount(){
+            this.setState({count : this.state.count - 1 })
+            this.fireEvent('change' , 'count' , this.state.count)
+        }
+    
+    
+    
+    
+        Style(){
+            return ''
+        }
+    
+    
+    }
+    
+    
+    Tag('dm-counter' , Counter)
+    
+
+</textarea>
+
+<pre class="hidden noShow" id="EventsHTML" title="Fire events">
+<dm-counter id="count"></dm-counter>
 </pre>
+
+<pre class="hidden noShow" id="EventsJS" title="Fire events">
+
+    document.getElementById("count").addEventListener("change" , (e) => {
+        console.log(e.detail)
+      })
+        </pre>
+
+    
+
 
 <pre class="hidden" id="Templating" title="Micro Templating">
     // Yet to come
@@ -229,7 +284,7 @@ console.log(e.detail)
 
             let strOptions = $("#code").html();
 
-            $("pre").each(function () {
+            $("textarea").each(function () {
                 if($(this).hasClass("noShow")) return;
                 const str = ` <option value="${$(this).prop("id")}">${$(this).prop("title") || $(this).prop("id")
                     }</option>`;
@@ -239,16 +294,17 @@ console.log(e.detail)
             $("#code").html(strOptions);
             document.querySelector("#code").addEventListener("change", (e) => {
                 const codeContainer = "#" + e.target.value;
-                let code = document.querySelector(codeContainer).innerHTML;
-                document.querySelector("#codeEditor").value = code;
+                let code = document.querySelector(codeContainer).value;
+                console.log(code)
+                document.querySelector("#codeEditor").value = code.replace("&gt;" , ">");
 
                 const codeContainerHTML = codeContainer + "HTML" ;
                  code = document.querySelector(codeContainerHTML)?.innerHTML;
                 document.querySelector("#codeEditorHTML").value = code;
 
                 const codeContainerJS = codeContainer + "JS" ;
-                 code = document.querySelector(codeContainerJS)?.innerHTML;
-                document.querySelector("#codeEditorJS").value = code;
+                 code = document.querySelector(codeContainerJS)?.innerText || "";
+                document.querySelector("#codeEditorJS").value = code.replace("&gt;" , ">");
 
 
             });

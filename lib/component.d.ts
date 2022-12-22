@@ -34,8 +34,8 @@ export declare abstract class Component extends HTMLElement {
     disconnectedCallback(): Promise<void>;
     attributeChangedCallback(name: string, oldValue: any, newValue: any): void;
     fireEvent(type: string, propName: string, value: any, bubbles?: boolean, composed?: boolean): void;
-    getProps(): string;
-    getState(): string;
+    getProps(isString?: boolean): any;
+    getState(isString?: boolean): any;
 }
 /**
  * @param  {string} tagName tag name
