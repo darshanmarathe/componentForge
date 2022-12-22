@@ -33,9 +33,9 @@
                     Preview
                     <input id="run" class="btn btn-primary" type="submit" value="Run">
 
-                    <input type="text" placeholder="html" name="html" id="hidhtml">
-                    <input type="text" placeholder="wc" name="wc" id="hidwc">
-                    <input type="text" placeholder="js" name="js" id="hidjs">
+                    <input type="hidden" placeholder="html" name="html" id="hidhtml">
+                    <input type="hidden" placeholder="wc" name="wc" id="hidwc">
+                    <input type="hidden" placeholder="js" name="js" id="hidjs">
 
 
 
@@ -116,7 +116,7 @@ Tag('cf-basic' , Basic)
     </pre>
     
     <pre class="hidden noShow" id="basicHTML">
-        <cf-basic id="basic"></cf-basic>
+        <cf-basic id="basic" name="john"></cf-basic>
     </pre>
 
 
@@ -132,78 +132,85 @@ Tag('cf-basic' , Basic)
         
 
     <pre class="hidden" id="PropsAndState" title="Props and state">
-
-      
-        import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.17';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.17';
 
 
-        export default class CountDown extends Component{
-            
-        
-        constructor(){
-          const  _props ={
-                count : 0
-            };
-            super(true , _props);
-            this.state = {
-                count: +this.props.count
-            };
+export default class CountDown extends Component{
+    
 
-            this.Init.bind(this);
+constructor(){
+    const  _props ={
+        count : 0,
+        interval : 1000
+    };
+    super(true , _props);
+    this.state = {
+        count: +this.props.count
+    };
 
-            this.Init();
+    this.Init.bind(this);
+
+    this.Init();
+}
+
+
+Init(){
+    const that = this;
+    const inter = setInterval(function() {
+        console.log(that.state.count);
+        that.setState({
+            count : that.state.count- 1
+        });
+        that.fireEvent("tick" , "value", {count : that.state.count , prevCount : that.state.count+ 1});
+        if(that.state.count === 0) {
+            clearInterval(inter);
+
         }
-        
-        
-        Init(){
-            const that = this;
-            const inter = setInterval(function() {
-                that.setState({
-                    count : that.state.count--
-                })
-                if(that.state.count === 0) 
-                    clearInterval(inter);
-            }, 1000)
-        }
-        
-            Template(){
-        
-                return html`
-                 <h2>${this.state.count}</h2>
-                   `
+    }, +this.props.interval)
+}
+
+    Template(){
+
+        return html`
+            <h2>${this.state.count}/${this.props.count}</h2>
+            `
+    }
+
+    Style(){
+        return html`
+        <style>
+            h2{
+                color:red
             }
         
-            Style(){
-                return html`
-                <style>
-                    h2{
-                        color:red
-                    }
-                
-                </style>
-                `
-            }
-        
-        }
-        
-        Tag("cf-countdown" , CountDown)
-        
-                
-        
-        
-        
-        
-        
-                
+        </style>
+        `
+    }
+
+}
+
+Tag("cf-countdown" , CountDown)
         
         </pre>
 
 
-        <pre class="hidden noShow" id="PropsAndStateHTML">
+<pre class="hidden noShow" id="PropsAndStateHTML">
 
-  <cf-countdown count="20"></cf-countdown>
+<cf-countdown count="20" id="countDown" interval="500"></cf-countdown>
+
+</pre>
+
+
+<pre class="hidden noShow" id="PropsAndStateJS">
+
+document.getElementById('countDown')
+.addEventListener('tick' , function(e) {
+console.log(e.detail)
+})
                     
-                    </pre>
+</pre>
+
+
     <script src="./js/codeeditor.js" type="module"></script>
 
     <script type="module">
