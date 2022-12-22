@@ -572,7 +572,7 @@ console.log(document.getElementById('countDown').getState())
 </textarea>
 
 <pre class="hidden" id="TemplatingHTML">
-
+<h2>Type "Cle"</h2>
     <dm-auto-complete url="https://jsonplaceholder.typicode.com/users"
 
    
@@ -596,6 +596,7 @@ export default class Todos extends Component {
       const todos  = await this.get(this.props.url)
       console.log(todos)
       this.setState({todos})
+      document.getElementById("result").remove()
     }
   
     Template(){
@@ -629,6 +630,7 @@ Tag('cf-todos' , Todos)
 </textarea>
 
 <pre class="hidden noShow" id="AJAXHTML">
+ 
     <cf-todos id="todos" url="https://jsonplaceholder.typicode.com/todos"></cf-todos>
     
 </pre>
@@ -731,6 +733,9 @@ setTimeout(() => {
                  code = document.querySelector(codeContainerJS)?.innerText || "";
                 document.querySelector("#codeEditorJS").value = code.replace("&gt;" , ">");
 
+                // setTimeout(() => {
+                    $("#run").click();
+                // }, 200);
 
             });
 
