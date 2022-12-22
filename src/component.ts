@@ -212,7 +212,7 @@ export abstract class Component extends HTMLElement {
   PreRender() {
     render(
       html`${this.Style()}
-${this.Template()}`, 
+${this.Template()}`,
 this.root);
   }
 
@@ -291,13 +291,20 @@ this.root);
   }
 
 
-  getProps() {
-    return JSON.stringify(this.props, null, 4);
-  }
+  getProps(isString = false) {
+         if (isString) {
 
-  getState() {
-    return JSON.stringify(this.state, null, 4);
-  }
+             return JSON.stringify(this.props, null, 4);
+         }
+         return this.props
+     }
+ getState(isString = false) {
+         if (isString) {
+
+             return JSON.stringify(this.state, null, 4);
+         }
+         return this.state
+     }
 }
 
 
