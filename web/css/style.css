@@ -11,6 +11,14 @@
   text-align: center;
 }
 
+.text-left{
+  text-align: left;
+}
+
+.text-italic{
+  font-style: italic;
+}
+
 .box{
    padding:20px;
 }
