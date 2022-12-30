@@ -574,8 +574,6 @@ console.log(document.getElementById('countDown').getState())
 <pre class="hidden" id="TemplatingHTML">
 <h2>Type "Cle"</h2>
     <dm-auto-complete url="https://jsonplaceholder.typicode.com/users"
-
-   
     textprop="name"
     keyprop="username"
     placeholder="Users"
@@ -631,7 +629,8 @@ Tag('cf-todos' , Todos)
 
 <pre class="hidden noShow" id="AJAXHTML">
  
-    <cf-todos id="todos" url="https://jsonplaceholder.typicode.com/todos"></cf-todos>
+    <cf-todos id="todos" 
+    url="https://jsonplaceholder.typicode.com/todos"></cf-todos>
     
 </pre>
 
@@ -697,6 +696,261 @@ setTimeout(() => {
 
     
 </pre>
+
+<textarea class="hidden" id="LoadExt" title="Load External css and js ">
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
+
+export default class JSONForm extends Component {
+  jsonEditor = undefined;
+  elementRef = null;
+ 
+
+
+ constructor() {
+ const _props = {
+   schema : {},
+   data: {},
+   enabled : "true"
+ }; 
+  super(false,_props);
+
+    this.state = {
+      defaultOptions: {
+        iconlib: "fontawesome5",
+        object_layout: "normal",
+        schema: this.props.schema,
+        show_errors: "interaction",
+        theme: "bootstrap4",
+
+        startval: this.props.data || {},
+      },
+    };
+  
+  }
+
+  set Value(val){
+    var defaultval = this.state.defaultOptions;
+    defaultval.startval = val;
+    this.setState({defaultOptions : defaultval})
+    this.jsonEditor.setValue(val)
+  }
+  get Value(){
+    return this.jsonEditor.getValue();
+  }
+ 
+  setUpEditor() {
+    if (this.jsonEditor) {
+      this.jsonEditor.destroy();
+    }
+    console.log('setting up editor' , this.props, this.state.defaultOptions.startval);
+    if(this.state.defaultOptions.schema === undefined) return;
+    this.elementRef = this.root.querySelector("#jsonform");
+    this.elementRef.innerHTML = ''
+
+    this.jsonEditor = new window.JSONEditor(
+      this.elementRef,
+      this.state.defaultOptions
+    );
+    this.jsonEditor.on("change", () => {
+      if (this.validate()) this.fireEvent("change", "value", this.jsonEditor.getValue());
+    //  this.data = this.jsonEditor.getValue();
+    });
+    this.jsonEditor.on("ready", () => {
+      // Now the api methods will be available
+      
+      if (this.props.enabled !== 'true') {
+        this.jsonEditor.disable();
+      }
+    });
+  }
+
+  validate() {
+    const errors = this.jsonEditor.validate();
+
+    return errors.length === 0;
+  }
+
+  initJsoneditor() {
+    // destroy old JSONEditor instance if exists
+   
+    
+    if (window.JSONEditor) {
+      this.setUpEditor();
+    } else {
+      const that = this;
+      const inter = setInterval(() => {
+        if (window.JSONEditor) {
+          that.setUpEditor();
+          clearInterval(inter);
+        }
+      }, 1000);
+    }
+    // new instance of JSONEditor
+
+    // listen for changes
+  };
+
+  ComponentDidReceiedProps(attribute, oldValue, attrValue){
+  
+    if(attribute === 'schema'){
+      var defaultval = this.state.defaultOptions;
+      defaultval.schema = attrValue;
+      this.setState({defaultOptions : defaultval}, this.initJsoneditor())
+      return
+    }
+
+    if(attribute === 'data'){
+      var defaultval = this.state.defaultOptions;
+      defaultval.startval = attrValue;
+      this.setState({defaultOptions : defaultval}, this.initJsoneditor())
+      return
+    }
+    this.initJsoneditor(0);
+
+  }
+  async ComponentDidMount(){
+    await this.loadScript(
+      "jsoneditor",
+      "https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"
+      );
+
+  
+  }
+
+  ComponentWillUnmount() {
+    if (this.jsonEditor) {
+      this.jsonEditor.destroy();
+    }
+  }
+ 
+  Template() {
+    return html`<div id="jsonform"><h2>${this.props.title}</h2></div>`;
+  }
+
+  Style() {
+    return html`
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" />
+  
+`;
+  }
+}
+Tag("dm-json-form", JSONForm);
+
+    
+    </textarea>
+
+    <pre id="LoadExtHTML">
+
+        <dm-json-form id="form1">
+            Loading please wait ....
+        </dm-json-form>
+    </pre>
+
+    <pre id="LoadExtJS">
+
+        
+var defaultSchema = {
+    title: "Person",
+    type: "object",
+    required: [
+      "name",
+      "age",
+      "date",
+      "favorite_color",
+      "gender",
+      "location",
+      "pets",
+    ],
+    properties: {
+      name: {
+        type: "string",
+        description: "First and Last name",
+        minLength: 4,
+        default: "Jeremy Dorn",
+      },
+      age: {
+        type: "integer",
+        default: 25,
+        minimum: 18,
+        maximum: 99,
+      },
+      favorite_color: {
+        type: "string",
+        format: "color",
+        title: "favorite color",
+        default: "#ffa500",
+      },
+      gender: {
+        type: "string",
+        enum: ["male", "female", "other"],
+      },
+      date: {
+        type: "string",
+        format: "date",
+        options: {
+          flatpickr: {},
+        },
+      },
+      location: {
+        type: "object",
+        title: "Location",
+        required: ["city", "state", "citystate"],
+        properties: {
+          city: {
+            type: "string",
+            default: "San Francisco",
+          },
+          state: {
+            type: "string",
+            default: "CA",
+          },
+          citystate: {
+            type: "string",
+            description:
+              "This is generated automatically from the previous two fields",
+            template: "{{city}}, {{state}}",
+            watch: {
+              city: "location.city",
+              state: "location.state",
+            },
+          },
+        },
+      },
+      pets: {
+        type: "array",
+        format: "table",
+        title: "Pets",
+        uniqueItems: true,
+        items: {
+          type: "object",
+          title: "Pet",
+          properties: {
+            type: {
+              type: "string",
+              enum: ["cat", "dog", "bird", "reptile", "other"],
+              default: "dog",
+            },
+            name: {
+              type: "string",
+            },
+          },
+        },
+        default: [
+          {
+            type: "dog",
+            name: "Walter",
+          },
+        ],
+      },
+    },
+  };
+  
+
+  var form = document.getElementById("form1");
+  form.innerHTML =""
+  form.schema = defaultSchema;
+    </pre>
 
 <textarea class="hidden" id="Slots" title="Slots">
 // Examples are in dev
