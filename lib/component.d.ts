@@ -28,7 +28,7 @@ export declare abstract class Component extends HTMLElement {
     makeDynamicProps(): void;
     setState(object: any, preRender?: boolean, callback?: (() => void)): void;
     PreRender(): void;
-    Tmpl(rec: any, _tempStr: string, elem?: null): any;
+    Tmpl(rec: any, _tempStr: string, elem?: any): any;
     Log(...args: any[]): void;
     connectedCallback(): Promise<void>;
     disconnectedCallback(): Promise<void>;

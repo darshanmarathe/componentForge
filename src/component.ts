@@ -216,45 +216,49 @@ ${this.Template()}`,
 this.root);
   }
 
-  Tmpl(rec: any, _tempStr: string, elem = null) {
-
-
+  Tmpl(rec: any, _tempStr: string, elem:any = null) {
     let _template = _tempStr;
-
+    if(typeof elem === 'string') {
+        const tempElem = document.createElement('div');
+        tempElem.innerHTML = elem;
+        elem = tempElem.children[0]
+    }
     //Get Child
-    const gc = (key: string, item: any) => {
-
-      let retItem = item;
-      const keys = key.split('.');
-      for (const _key of keys) {
-        const split = _key.split('.');
-        const newKey = split.length > 1 ? split[1] : split[0];
-        retItem = retItem[newKey]
-      }
-
-
-      return retItem;
-    }
+    const gc = (key:string, item:any) => {
+        let retItem = item;
+        const keys = key.split('.');
+        for (const _key of keys) {
+            const split = _key.split('.');
+            const newKey = split.length > 1 ? split[1] : split[0];
+            retItem = retItem[newKey];
+        }
+        return retItem;
+    };
     const re = /{(.*?)}/g;
-
-    const tkeys = _template.match(re)
-
-    tkeys?.forEach((k) => {
-      k = k.replace('{', '').replace('}', '')
-      if (k.indexOf('.') === -1)
-        _template = _template.replace(`{${k}}`, rec[k]);
-      else
-        _template = _template.replace(`{${k}}`, gc(k, rec))
-
-    })
-
-    if(elem !== null){
-          // @ts-ignore
-          elem['innerHTML'] = unsafeHTML(_template);
+    const tkeys = _template.match(re);
+    tkeys === null || tkeys === void 0 ? void 0 : tkeys.forEach((k) => {
+        k = k.replace('{', '').replace('}', '');
+        if (k.indexOf('.') === -1)
+            _template = _template.replace(`{${k}}`, rec[k]);
+        else
+            _template = _template.replace(`{${k}}`, gc(k, rec));
+    });
+    if(elem){
+        const keys = Object.keys(rec);
+        for (const k of keys) {
+            elem[k] = rec[k];
+        }
     }
-
-    return unsafeHTML(_template);
-
+    if (elem !== null && _template !== "") {
+        // @ts-ignore
+        elem['innerHTML'] = unsafeHTML(_template);
+        return unsafeHTML(_template);
+    }else if(elem === null && _template !== ""){
+        return unsafeHTML(_template);
+    }else {
+        return elem
+    }
+    
   }
 
 
