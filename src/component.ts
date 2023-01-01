@@ -33,7 +33,7 @@ export abstract class Component extends HTMLElement {
     let props: any = {};
     for (const key of keys) {
       if (key.toLowerCase().startsWith("data-")) {
-        console.warn(this.getAttribute(key))
+       
         let obj = JSON.parse(this.getAttribute(key) || "{}");
         props[key.replace("data-", "")] = typeof this.getAttribute(key) === 'object' ? this.getAttribute(key) : obj;
       } else {
@@ -41,7 +41,7 @@ export abstract class Component extends HTMLElement {
       }
     }
     this.props = { ...this.props, ...props };
-    console.warn(this.props)
+
   }
 
   get(url: string) {
@@ -167,7 +167,7 @@ export abstract class Component extends HTMLElement {
     this.slotChnaged && this.slotChnaged.bind(this);
     this.root.querySelectorAll('slot')?.forEach((slot: any) => {
       slot.addEventListener('slotchange', (e: any) => {
-        console.warn(e)
+      
         this.slotChnaged && this.slotChnaged(e)
         this.ComponentDidMount && this.ComponentDidMount();
       })

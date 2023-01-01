@@ -21,25 +21,25 @@
         <div class="row">
             <div class="col-6">
                 <div class="container">
-                <select class="form-control" style="width: 100%" name="code" id="code">
-                    <option value="">Select</option>
-                </select>
+                    <select class="form-control" style="width: 100%" name="code" id="code">
+                        <option value="">Select</option>
+                    </select>
                 </div>
             </div>
             <br>
             <div class="col-6">
                 <div class="container">
-                <form target="prev" action="preview" method="post">
-                    Preview
-                    <input id="run" class="btn btn-primary" type="submit" value="Run">
+                    <form target="prev" action="preview" method="post">
+                        Preview
+                        <input id="run" class="btn btn-primary" type="submit" value="Run">
 
-                    <input type="hidden" placeholder="html" name="html" id="hidhtml">
-                    <input type="hidden" placeholder="wc" name="wc" id="hidwc">
-                    <input type="hidden" placeholder="js" name="js" id="hidjs">
+                        <input type="hidden" placeholder="html" name="html" id="hidhtml">
+                        <input type="hidden" placeholder="wc" name="wc" id="hidwc">
+                        <input type="hidden" placeholder="js" name="js" id="hidjs">
 
 
 
-                </form>
+                    </form>
 
                 </div>
             </div>
@@ -77,23 +77,23 @@
                     </div>
 
                 </div>
-               
+
             </div>
 
             <div class="col-6">
                 <div class="container" style="padding: 0px;">
-                <iframe name="prev">
-                    Hello
-                </iframe>
-           </div>
+                    <iframe name="prev">
+                        Hello
+                    </iframe>
+                </div>
             </div>
         </div>
-       
+
     </div>
     </div>
 
     <textarea class="hidden" id="basic">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
 
 
 export default class Basic extends Component {
@@ -114,7 +114,7 @@ export default class Basic extends Component {
 Tag('cf-basic' , Basic)
          
     </textarea>
-    
+
     <pre class="hidden noShow" id="basicHTML">
         <cf-basic id="basic" name="john"></cf-basic>
     </pre>
@@ -129,10 +129,10 @@ Tag('cf-basic' , Basic)
         
         doSomething();
             </pre>
-        
+
 
     <textarea class="hidden" id="PropsAndState" title="Props and state">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
 
 
 export default class CountDown extends Component{
@@ -194,14 +194,14 @@ Tag("cf-countdown" , CountDown)
     </textarea>
 
 
-<pre class="hidden noShow" id="PropsAndStateHTML">
+    <pre class="hidden noShow" id="PropsAndStateHTML">
 
 <cf-countdown count="20" id="countDown" interval="500"></cf-countdown>
 
 </pre>
 
 
-<pre class="hidden noShow" id="PropsAndStateJS">
+    <pre class="hidden noShow" id="PropsAndStateJS">
 
 document.getElementById('countDown')
 .addEventListener('tick' , function(e) {
@@ -212,8 +212,8 @@ console.log(document.getElementById('countDown').getState())
 </pre>
 
 
-<textarea class="hidden" id="Events" title="Fire events">
-    import { Component, html , Tag }  from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+    <textarea class="hidden" id="Events" title="Fire events">
+    import { Component, html , Tag }  from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
 
     export default class Counter extends Component {
     
@@ -257,22 +257,22 @@ console.log(document.getElementById('countDown').getState())
 
 </textarea>
 
-<pre class="hidden noShow" id="EventsHTML" title="Fire events">
+    <pre class="hidden noShow" id="EventsHTML" title="Fire events">
 <dm-counter id="count"></dm-counter>
 </pre>
 
-<pre class="hidden noShow" id="EventsJS" title="Fire events">
+    <pre class="hidden noShow" id="EventsJS" title="Fire events">
 
     document.getElementById("count").addEventListener("change" , (e) => {
         console.log(e.detail)
       })
         </pre>
 
-    
 
 
-<textarea class="hidden" id="Templating" title="Micro Templating">
-    import { html, Tag, Component } from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+
+    <textarea class="hidden" id="Templating" title="Micro Templating">
+    import { html, Tag, Component } from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
 
 
     export default class AutoComplete extends Component {
@@ -571,7 +571,7 @@ console.log(document.getElementById('countDown').getState())
     
 </textarea>
 
-<pre class="hidden" id="TemplatingHTML">
+    <pre class="hidden" id="TemplatingHTML">
 <h2>Type "Cle"</h2>
     <dm-auto-complete url="https://jsonplaceholder.typicode.com/users"
     textprop="name"
@@ -584,8 +584,8 @@ console.log(document.getElementById('countDown').getState())
 
 
 
-<textarea class="hidden" id="AJAX" title="Built in Get and Post">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+    <textarea class="hidden" id="AJAX" title="Built in Get and Post">
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
 
 
 export default class Todos extends Component {
@@ -627,16 +627,16 @@ Tag('cf-todos' , Todos)
         
 </textarea>
 
-<pre class="hidden noShow" id="AJAXHTML">
- 
+    <pre class="hidden noShow" id="AJAXHTML">
+
     <cf-todos id="todos" 
     url="https://jsonplaceholder.typicode.com/todos"></cf-todos>
     
 </pre>
 
 
-<textarea class="hidden" id="LifeCycle" title="Component Life Cycle">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.18';
+    <textarea class="hidden" id="LifeCycle" title="Component Life Cycle">
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
 
     export default class LifeCycle extends Component {
 
@@ -678,13 +678,13 @@ Tag('cf-todos' , Todos)
 
 </textarea>
 
-<pre class="hidden" id="LifeCycleHTML">
+    <pre class="hidden" id="LifeCycleHTML">
     <cf-lifecycle id="life"></cf-lifecycle>
 </pre>
 
-<pre class="hidden" id="LifeCycleJS">
-      
-       
+    <pre class="hidden" id="LifeCycleJS">
+
+
 var life =  document.getElementById("life");
 setTimeout(() => {
    life.name= "Darshan"
@@ -697,8 +697,8 @@ setTimeout(() => {
     
 </pre>
 
-<textarea class="hidden" id="LoadExt" title="Load External css and js ">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
+    <textarea class="hidden" id="LoadExt" title="Load External css and js ">
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
 
 export default class JSONForm extends Component {
   jsonEditor = undefined;
@@ -849,7 +849,7 @@ Tag("dm-json-form", JSONForm);
 
     <pre id="LoadExtJS">
 
-        
+
 var defaultSchema = {
     title: "Person",
     type: "object",
@@ -952,10 +952,153 @@ var defaultSchema = {
   form.schema = defaultSchema;
     </pre>
 
-<textarea class="hidden" id="Slots" title="Slots">
-// Examples are in dev
+
+
+    <textarea class="hidden" id="AdvTmpl" title="Advanced templating">
+  
+
+        import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.19';
+
+
+
+export default class Select extends Component {
+
+  constructor() {
+    const _props = {
+      url: '',
+      child: null,
+      template: ""
+    }
+
+    super(true, _props)
+
+    if (this.props.url === "") {
+      console.error("url is mandetory property")
+    }
+    console.log(this.props.child)
+  }
+
+
+
+  async ComponentDidMount() {
+    const records = await this.get(this.props.url)
+
+    this.setState({
+      records
+    })
+  }
+  Template() {
+    if (this.state.records) {
+
+      if (this.props.child) {
+        return html`<div>
+  ${this.state.records.map(jet => this.Tmpl({ jet: jet }, "", this.props.child))}
+</div>`
+      } else if (this.props.template !== "") {
+        return this.state.records.map(jet => this.Tmpl(jet, this.props.template))
+      } else {
+        return html`
+        <ul>
+        
+          ${this.state.records.map(jet => html`<li>${jet.name} - ${jet.country}</li>`)}
+        </ul>
+       
+       `
+      }
+    }
+    return html`hello select`
+  }
+
+  Style() {
+    return html``
+  }
+}
+
+
+export class Card extends Component {
+  constructor() {
+    const _props = {
+      jet: {
+        "name": "F-18",
+        "natoname": "Hornet",
+        "country": "USA",
+        "image": "https://images05.military.com/sites/default/files/media/equipment/military-aircraft/f-18cd-hornet/2014/02/f-18cd-hornet_003.jpg"
+      }
+    }
+
+    super(true, _props)
+
+
+  }
+
+
+  Template() {
+    const jet = this.props.jet
+    return html`<div>
+
+  <b>${jet.name}</b>
+  <br>
+  <i>${jet.natoname}</i>
+
+  <span>${jet.country}</span>
+  <hr>
+
+  <img class="jetImg" src="${jet.image}" title="${jet.name} Image" />
+
+  <div>`
+  }
+
+  Style() {
+    return html`<style>
+    .jetImg{
+      height:100%;
+      width:100%;
+    }
+
+    .flagImg{
+      height:25px;
+      width:25px;
+    }
+
+div{
+  border: 1px dashed red;
+  width:200px;
+}
+
+    </style>`
+  }
+
+
+}
+Tag('dm-select', Select)
+
+Tag('dm-card', Card)
+
+
 
 </textarea>
+
+    <pre id="AdvTmplHTML">
+    <dm-select url="https://nodeapi.collabmantra.com/jets" child="<dm-card jet={jet}/>">
+
+</dm-select>
+
+<dm-select url="https://nodeapi.collabmantra.com/jets" >
+
+</dm-select>
+
+<dm-select url="https://nodeapi.collabmantra.com/jets" template="{name}-{natoname} ({country}) <br> <img  style='height:100px;widht:100px' src='{image}' /> <br>" >
+
+</dm-select>
+
+
+</pre>
+
+    <textarea class="hidden" id="Slots" title="Slots">
+    // Examples are in dev
+    
+    </textarea>
+
     <script src="./js/codeeditor.js" type="module"></script>
 
     <script type="module">
@@ -966,7 +1109,7 @@ var defaultSchema = {
             let strOptions = $("#code").html();
 
             $("textarea").each(function () {
-                if($(this).hasClass("noShow")) return;
+                if ($(this).hasClass("noShow")) return;
                 const str = ` <option value="${$(this).prop("id")}">${$(this).prop("title") || $(this).prop("id")
                     }</option>`;
                 strOptions += str;
@@ -977,18 +1120,18 @@ var defaultSchema = {
                 const codeContainer = "#" + e.target.value;
                 let code = document.querySelector(codeContainer).value;
                 console.log(code)
-                document.querySelector("#codeEditor").value = code.replace("&gt;" , ">");
+                document.querySelector("#codeEditor").value = code.replace("&gt;", ">");
 
-                const codeContainerHTML = codeContainer + "HTML" ;
-                 code = document.querySelector(codeContainerHTML)?.innerHTML;
+                const codeContainerHTML = codeContainer + "HTML";
+                code = document.querySelector(codeContainerHTML)?.innerHTML;
                 document.querySelector("#codeEditorHTML").value = code;
 
-                const codeContainerJS = codeContainer + "JS" ;
-                 code = document.querySelector(codeContainerJS)?.innerText || "";
-                document.querySelector("#codeEditorJS").value = code.replace("&gt;" , ">");
+                const codeContainerJS = codeContainer + "JS";
+                code = document.querySelector(codeContainerJS)?.innerText || "";
+                document.querySelector("#codeEditorJS").value = code.replace("&gt;", ">");
 
                 // setTimeout(() => {
-                    $("#run").click();
+                $("#run").click();
                 // }, 200);
 
             });
@@ -999,12 +1142,12 @@ var defaultSchema = {
                 $('#hidwc').val(document.querySelector("#codeEditor").Code || "")
 
                 $('#hidjs').val(document.querySelector("#codeEditorJS").Code || "")
-                
+
                 $('#hidhtml').val(document.querySelector("#codeEditorHTML").Code || "")
-              
+
 
             });
-        }); 
+        });
 
 
 
