@@ -1079,17 +1079,26 @@ Tag('dm-card', Card)
 </textarea>
 
     <pre id="AdvTmplHTML">
-    <dm-select url="https://nodeapi.collabmantra.com/jets" child="<dm-card jet={jet}/>">
+
+        <h2>Default</h2>
+        <dm-select url="https://nodeapi.collabmantra.com/jets" >
+
+        </dm-select>
+
+        <h2>With template string</h2>
+
+
+        <dm-select url="https://nodeapi.collabmantra.com/jets" child="<dm-card jet={jet}/>">
 
 </dm-select>
 
-<dm-select url="https://nodeapi.collabmantra.com/jets" >
 
-</dm-select>
+<h2>Injecting other web component</h2>
 
 <dm-select url="https://nodeapi.collabmantra.com/jets" template="{name}-{natoname} ({country}) <br> <img  style='height:100px;widht:100px' src='{image}' /> <br>" >
 
 </dm-select>
+
 
 
 </pre>
