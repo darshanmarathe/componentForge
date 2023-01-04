@@ -15,6 +15,7 @@ export abstract class Component extends HTMLElement {
   root: ShadowRoot | any;
   cssStyle: any;
   scripts: any[] = [];
+  slots: any;
 
   abstract ComponentDidMount(): Promise<void>;
   abstract ComponentWillUnmount(): Promise<void>;
@@ -33,7 +34,7 @@ export abstract class Component extends HTMLElement {
     let props: any = {};
     for (const key of keys) {
       if (key.toLowerCase().startsWith("data-")) {
-       
+
         let obj = JSON.parse(this.getAttribute(key) || "{}");
         props[key.replace("data-", "")] = typeof this.getAttribute(key) === 'object' ? this.getAttribute(key) : obj;
       } else {
@@ -167,14 +168,30 @@ export abstract class Component extends HTMLElement {
     this.slotChnaged && this.slotChnaged.bind(this);
     this.root.querySelectorAll('slot')?.forEach((slot: any) => {
       slot.addEventListener('slotchange', (e: any) => {
-      
+
         this.slotChnaged && this.slotChnaged(e)
         this.ComponentDidMount && this.ComponentDidMount();
       })
     });
     setTimeout(() => {
       this.PreRender();
+      this.GetSlots();
     }, 100);
+  }
+
+  GetSlots() {
+    this.slots = this.root.querySelectorAll('slot');
+
+    this.slots.forEach((slot: any, index: number) => {
+      let elem: any[] = slot.assignedNodes();
+      if (elem.length > 0) {
+        const keys = elem[0].getAttributeNames()
+        for (const k of keys) {
+         if (['name', 'id', 'slot'].indexOf(k) > -1) continue;
+          elem[0][k] = slot[k];
+        }
+      }
+    })
   }
 
   //make sure all props are in lower case
@@ -213,52 +230,52 @@ export abstract class Component extends HTMLElement {
     render(
       html`${this.Style()}
 ${this.Template()}`,
-this.root);
+      this.root);
   }
 
-  Tmpl(rec: any, _tempStr: string, elem:any = null) {
+  Tmpl(rec: any, _tempStr: string, elem: any = null) {
     let _template = _tempStr;
-    if(typeof elem === 'string') {
-        const tempElem = document.createElement('div');
-        tempElem.innerHTML = elem;
-        elem = tempElem.children[0]
+    if (typeof elem === 'string') {
+      const tempElem = document.createElement('div');
+      tempElem.innerHTML = elem;
+      elem = tempElem.children[0]
     }
     //Get Child
-    const gc = (key:string, item:any) => {
-        let retItem = item;
-        const keys = key.split('.');
-        for (const _key of keys) {
-            const split = _key.split('.');
-            const newKey = split.length > 1 ? split[1] : split[0];
-            retItem = retItem[newKey];
-        }
-        return retItem;
+    const gc = (key: string, item: any) => {
+      let retItem = item;
+      const keys = key.split('.');
+      for (const _key of keys) {
+        const split = _key.split('.');
+        const newKey = split.length > 1 ? split[1] : split[0];
+        retItem = retItem[newKey];
+      }
+      return retItem;
     };
     const re = /{(.*?)}/g;
     const tkeys = _template.match(re);
     tkeys === null || tkeys === void 0 ? void 0 : tkeys.forEach((k) => {
-        k = k.replace('{', '').replace('}', '');
-        if (k.indexOf('.') === -1)
-            _template = _template.replace(`{${k}}`, rec[k]);
-        else
-            _template = _template.replace(`{${k}}`, gc(k, rec));
+      k = k.replace('{', '').replace('}', '');
+      if (k.indexOf('.') === -1)
+        _template = _template.replace(`{${k}}`, rec[k]);
+      else
+        _template = _template.replace(`{${k}}`, gc(k, rec));
     });
-    if(elem){
-        const keys = Object.keys(rec);
-        for (const k of keys) {
-            elem[k] = rec[k];
-        }
+    if (elem) {
+      const keys = Object.keys(rec);
+      for (const k of keys) {
+        elem[k] = rec[k];
+      }
     }
     if (elem !== null && _template !== "") {
-        // @ts-ignore
-        elem['innerHTML'] = unsafeHTML(_template);
-        return unsafeHTML(_template);
-    }else if(elem === null && _template !== ""){
-        return unsafeHTML(_template);
-    }else {
-        return elem
+      // @ts-ignore
+      elem['innerHTML'] = unsafeHTML(_template);
+      return unsafeHTML(_template);
+    } else if (elem === null && _template !== "") {
+      return unsafeHTML(_template);
+    } else {
+      return elem
     }
-    
+
   }
 
 
@@ -296,19 +313,19 @@ this.root);
 
 
   getProps(isString = false) {
-         if (isString) {
+    if (isString) {
 
-             return JSON.stringify(this.props, null, 4);
-         }
-         return this.props
-     }
- getState(isString = false) {
-         if (isString) {
+      return JSON.stringify(this.props, null, 4);
+    }
+    return this.props
+  }
+  getState(isString = false) {
+    if (isString) {
 
-             return JSON.stringify(this.state, null, 4);
-         }
-         return this.state
-     }
+      return JSON.stringify(this.state, null, 4);
+    }
+    return this.state
+  }
 }
 
 
