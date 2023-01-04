@@ -185,6 +185,7 @@ export abstract class Component extends HTMLElement {
     this.slots.forEach((slot: any, index: number) => {
       let elem: any[] = slot.assignedNodes();
       if (elem.length > 0) {
+        debugger;
         const keys = elem[0].getAttributeNames()
         for (const k of keys) {
          if (['name', 'id', 'slot'].indexOf(k) > -1) continue;
@@ -233,7 +234,7 @@ ${this.Template()}`,
       this.root);
       setTimeout(() => {
         this.GetSlots();
-       }, 100);
+       }, 200);
   }
 
   Tmpl(rec: any, _tempStr: string, elem: any = null) {
