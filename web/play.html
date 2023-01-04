@@ -93,7 +93,7 @@
     </div>
 
     <textarea class="hidden" id="basic">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
 
 export default class Basic extends Component {
@@ -132,7 +132,7 @@ Tag('cf-basic' , Basic)
 
 
     <textarea class="hidden" id="PropsAndState" title="Props and state">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
 
 export default class CountDown extends Component{
@@ -213,7 +213,7 @@ console.log(document.getElementById('countDown').getState())
 
 
     <textarea class="hidden" id="Events" title="Fire events">
-    import { Component, html , Tag }  from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+    import { Component, html , Tag }  from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
     export default class Counter extends Component {
     
@@ -272,7 +272,7 @@ console.log(document.getElementById('countDown').getState())
 
 
     <textarea class="hidden" id="Templating" title="Micro Templating">
-    import { html, Tag, Component } from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+    import { html, Tag, Component } from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
 
     export default class AutoComplete extends Component {
@@ -585,7 +585,7 @@ console.log(document.getElementById('countDown').getState())
 
 
     <textarea class="hidden" id="AJAX" title="Built in Get and Post">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
 
 export default class Todos extends Component {
@@ -636,7 +636,7 @@ Tag('cf-todos' , Todos)
 
 
     <textarea class="hidden" id="LifeCycle" title="Component Life Cycle">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
     export default class LifeCycle extends Component {
 
@@ -698,7 +698,7 @@ setTimeout(() => {
 </pre>
 
     <textarea class="hidden" id="LoadExt" title="Load External css and js ">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
 export default class JSONForm extends Component {
   jsonEditor = undefined;
@@ -840,14 +840,14 @@ Tag("dm-json-form", JSONForm);
     
     </textarea>
 
-    <pre id="LoadExtHTML">
+    <pre id="LoadExtHTML" class="hidden noShow">
 
         <dm-json-form id="form1">
             Loading please wait ....
         </dm-json-form>
     </pre>
 
-    <pre id="LoadExtJS">
+    <pre id="LoadExtJS" class="hidden noShow">
 
 
 var defaultSchema = {
@@ -957,7 +957,7 @@ var defaultSchema = {
     <textarea class="hidden" id="AdvTmpl" title="Advanced templating">
   
 
-        import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.20';
+        import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
 
 
 
@@ -1078,7 +1078,7 @@ Tag('dm-card', Card)
 
 </textarea>
 
-    <pre id="AdvTmplHTML">
+    <pre id="AdvTmplHTML" class="hidden noShow">
 
 <h2>Default</h2>
 <dm-select url="https://nodeapi.collabmantra.com/jets" >
@@ -1103,11 +1103,148 @@ Tag('dm-card', Card)
 
 </pre>
 
-    <textarea class="hidden" id="Slots" title="Slots">
-    // Examples are in dev
+    <textarea class="hidden" id="Slots" title="Slots with Databinding (only componentforge)">
+      import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.21';
+
+
+
+    export default class Select extends Component {
+    
+        constructor() {
+            const _props = {
+                url: '',
+                child: null,
+                template: "",
+                name: "select"
+            }
+    
+            super(true, _props)
+    
+            if (this.props.url === "") {
+                console.error("url is mandetory property")
+            }
+            console.log(this.props.child)
+        }
+    
+    
+    
+        async ComponentDidMount() {
+            const records = await this.get(this.props.url)
+            console.log(records)
+            records.forEach(rec => {
+                rec.isSelected = false;
+            });
+            this.setState({
+                records
+            })
+        }
+        Template() {
+            if (this.state.records) {
+    
+       
+       return this.state.records.map(jet => {
+            const radio = html`    <input type="radio" id="${this.props.id}"
+            name="${this.props.name}" @change="${(e) => {
+                this.state.records.forEach(j => j.isSelected = false)
+                jet.isSelected = e.target.checked;
+                this.setState({records : this.state.records})
+            }}" value="${jet.name}" > ${jet.name}`;
+    
+            return html`
+                <div>
+                        <div>
+                            ${radio}
+                        </div>
+                <div>
+                    ${jet.isSelected === true ? html`<slot name="card" .jet=${jet}>Jet Should come here...</slot>` : "Hello"}
+                </div>
+    
+                </div>
+            
+            `
+        })
+           
+                
+            }
+            return html`hello select`
+        }
+    
+        Style() {
+            return html``
+        }
+    }
+    
+    
+    export class Card extends Component {
+        constructor() {
+            const _props = {
+                jet: {
+                    "name": "F-18",
+                    "natoname": "Hornet",
+                    "country": "USA",
+                    "image": "https://images05.military.com/sites/default/files/media/equipment/military-aircraft/f-18cd-hornet/2014/02/f-18cd-hornet_003.jpg"
+                }
+            }
+    
+            super(true, _props)
+    
+    
+        }
+    
+        Template() {
+            const jet = this.props.jet
+            console.warn(jet)
+            debugger;
+            return html`<div>
+    
+        <b>${jet.name}</b>
+        <br>
+        <i>${jet.natoname}</i>
+    
+        <span>${jet.country}</span>
+        <hr>
+    
+        <img class="jetImg" src="${jet.image}" title="${jet.name} Image" />
+    
+        <div>`
+        }
+    
+        Style() {
+            return html`<style>
+        .jetImg{
+          height:100px;
+          width:100px;
+        }
+    
+        .flagImg{
+          height:25px;
+          width:25px;
+        }
+    
+    div{
+      border: 1px dashed red;
+      width:200px;
+    }
+    
+        </style>`
+        }
+    
+    
+    }
+    Tag('dm-select', Select)
+    
+    Tag('dm-card', Card)
+    
     
     </textarea>
+<pre class="hidden noShow" id="SlotsHTML">
+  
+<dm-select url="https://nodeapi.collabmantra.com/jets">
+  <dm-card  jet slot="card" />
+</dm-select>
 
+
+</pre>
     <script src="./js/codeeditor.js" type="module"></script>
 
     <script type="module">

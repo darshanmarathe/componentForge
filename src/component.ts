@@ -175,7 +175,7 @@ export abstract class Component extends HTMLElement {
     });
     setTimeout(() => {
       this.PreRender();
-      this.GetSlots();
+
     }, 100);
   }
 
@@ -231,6 +231,9 @@ export abstract class Component extends HTMLElement {
       html`${this.Style()}
 ${this.Template()}`,
       this.root);
+      setTimeout(() => {
+        this.GetSlots();
+       }, 100);
   }
 
   Tmpl(rec: any, _tempStr: string, elem: any = null) {

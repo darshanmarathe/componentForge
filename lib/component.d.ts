@@ -5,6 +5,7 @@ export declare abstract class Component extends HTMLElement {
     root: ShadowRoot | any;
     cssStyle: any;
     scripts: any[];
+    slots: any;
     abstract ComponentDidMount(): Promise<void>;
     abstract ComponentWillUnmount(): Promise<void>;
     abstract slotChnaged(event: any): Promise<void>;
@@ -25,6 +26,7 @@ export declare abstract class Component extends HTMLElement {
      * @param {default props to watch {}} [_props={}]
      */
     constructor(shadow?: boolean, _props?: {});
+    GetSlots(): void;
     makeDynamicProps(): void;
     setState(object: any, preRender?: boolean, callback?: (() => void)): void;
     PreRender(): void;
