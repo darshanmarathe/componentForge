@@ -16,7 +16,7 @@ export abstract class Component extends HTMLElement {
   cssStyle: any;
   scripts: any[] = [];
   slots: any;
-  firstRender: Boolean;
+
 
   abstract ComponentDidMount(): Promise<void>;
   abstract ComponentWillUnmount(): Promise<void>;
@@ -152,7 +152,7 @@ export abstract class Component extends HTMLElement {
       throw new Error("Template and Style functions are required....");
 
     }
-    this.firstRender = true;
+ 
     if (Object.keys(_props).length > 0) {
       this.props = _props
     }
@@ -189,12 +189,12 @@ export abstract class Component extends HTMLElement {
       if (elem.length > 0) {
         debugger;
         const keys = elem[0].getAttributeNames()
+        //elem[0].style.display = 'none'
         for (const k of keys) {
-          elem[0].style.display = 'none'
          if (['name', 'id', 'slot'].indexOf(k) > -1) continue;
           elem[0][k] = slot[k];
-          elem[0].style.display = 'block'
         }
+        //elem[0].style.display = 'block'
       }
     })
   }
@@ -236,14 +236,9 @@ export abstract class Component extends HTMLElement {
       html`${this.Style()}
 ${this.Template()}`,
       this.root);
-      if(this.firstRender){
-        setTimeout(() => {
-            this.firstRender = false
-        }, 100);
-    }else{
+    
         this.GetSlots();
-    }
-       
+   
   }
 
   Tmpl(rec: any, _tempStr: string, elem: any = null) {
