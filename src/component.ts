@@ -188,8 +188,10 @@ export abstract class Component extends HTMLElement {
         debugger;
         const keys = elem[0].getAttributeNames()
         for (const k of keys) {
+          elem[0].style.display = 'none'
          if (['name', 'id', 'slot'].indexOf(k) > -1) continue;
           elem[0][k] = slot[k];
+          elem[0].style.display = 'block'
         }
       }
     })
