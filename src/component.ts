@@ -234,9 +234,9 @@ export abstract class Component extends HTMLElement {
       html`${this.Style()}
 ${this.Template()}`,
       this.root);
-      setTimeout(() => {
+
         this.GetSlots();
-       }, 200);
+       
   }
 
   Tmpl(rec: any, _tempStr: string, elem: any = null) {
