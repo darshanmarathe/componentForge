@@ -16,6 +16,7 @@ export abstract class Component extends HTMLElement {
   cssStyle: any;
   scripts: any[] = [];
   slots: any;
+  firstRender: Boolean;
 
   abstract ComponentDidMount(): Promise<void>;
   abstract ComponentWillUnmount(): Promise<void>;
@@ -151,6 +152,7 @@ export abstract class Component extends HTMLElement {
       throw new Error("Template and Style functions are required....");
 
     }
+    this.firstRender = true;
     if (Object.keys(_props).length > 0) {
       this.props = _props
     }
@@ -234,8 +236,13 @@ export abstract class Component extends HTMLElement {
       html`${this.Style()}
 ${this.Template()}`,
       this.root);
-
+      if(this.firstRender){
+        setTimeout(() => {
+            this.firstRender = false
+        }, 100);
+    }else{
         this.GetSlots();
+    }
        
   }
 
