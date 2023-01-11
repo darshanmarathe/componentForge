@@ -6,7 +6,6 @@ export declare abstract class Component extends HTMLElement {
     cssStyle: any;
     scripts: any[];
     slots: any;
-    firstRender: Boolean;
     abstract ComponentDidMount(): Promise<void>;
     abstract ComponentWillUnmount(): Promise<void>;
     abstract slotChnaged(event: any): Promise<void>;

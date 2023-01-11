@@ -1,3 +1,4 @@
+REM publish "message" "<version 1.1.1>"
 call git add .
 call git commit -m %1
 call git push

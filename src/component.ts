@@ -177,7 +177,7 @@ export abstract class Component extends HTMLElement {
     });
     setTimeout(() => {
       this.PreRender();
-
+this.GetSlots()
     }, 100);
   }
 
@@ -185,16 +185,17 @@ export abstract class Component extends HTMLElement {
     this.slots = this.root.querySelectorAll('slot');
 
     this.slots.forEach((slot: any, index: number) => {
+      if(slot.hasAttribute('handled')) return;
       let elem: any[] = slot.assignedNodes();
       if (elem.length > 0) {
         debugger;
         const keys = elem[0].getAttributeNames()
-        //elem[0].style.display = 'none'
         for (const k of keys) {
          if (['name', 'id', 'slot'].indexOf(k) > -1) continue;
           elem[0][k] = slot[k];
         }
-        //elem[0].style.display = 'block'
+        slot.setAttribute("handled" , true)
+        
       }
     })
   }
