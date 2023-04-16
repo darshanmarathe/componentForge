@@ -8,6 +8,8 @@
     "config": "tsc --showConfig",
     "prebuild": "npm-bump patch",
     "build": "tsc",
+    "minify" : "uglifyjs  ./lib/component.js -o ./lib/component.min.js --compress --mangle  ",
+    "postbuild" : "minify",
     "publish": "tsc"
   },
   "repository": {
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "npm-bump": "^0.0.32",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "uglify-js": "^3.17.4"
   }
 }
