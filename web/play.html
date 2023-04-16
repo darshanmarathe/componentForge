@@ -93,15 +93,15 @@
     </div>
 
     <textarea class="hidden" id="basic">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
 
 
 export default class Basic extends Component {
     Template(){
         return html`Hello ${this.props.name || 'world'}
         <br>
-        You are cool 
-        
+        You are cool
+
         `
     }
 
@@ -112,7 +112,7 @@ export default class Basic extends Component {
 
 
 Tag('cf-basic' , Basic)
-         
+
     </textarea>
 
     <pre class="hidden noShow" id="basicHTML">
@@ -126,17 +126,17 @@ Tag('cf-basic' , Basic)
                     document.getElementById('basic').name ="Darshan Marathe"
             }, 2000)
         }
-        
+
         doSomething();
             </pre>
 
 
     <textarea class="hidden" id="PropsAndState" title="Props and state">
-import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
 
 
 export default class CountDown extends Component{
-    
+
 
 constructor(){
     const  _props ={
@@ -182,7 +182,7 @@ Init(){
             h2{
                 color:red
             }
-        
+
         </style>
         `
     }
@@ -190,7 +190,7 @@ Init(){
 }
 
 Tag("cf-countdown" , CountDown)
-        
+
     </textarea>
 
 
@@ -208,52 +208,52 @@ document.getElementById('countDown')
 console.log(e.detail);
 console.log(document.getElementById('countDown').getState())
 })
-                    
+
 </pre>
 
 
     <textarea class="hidden" id="Events" title="Fire events">
-    import { Component, html , Tag }  from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+    import { Component, html , Tag }  from 'https://cdn.jsdelivr.net/npm/componentforge';
 
     export default class Counter extends Component {
-    
+
         Template() {
             return html`<b>Counter :</b>  ${this.state.count} <br>
                 <button @click=${(e) => this.AddCount()}>+</button>
                 <button @click=${(e) => this.SubCount()}>-</button>
             `
         }
-    
+
         constructor(){
             super()
             this.state = {
                 count : +this.props.count || 0
             };
-        }   
-    
+        }
+
         AddCount(){
             this.setState({count : this.state.count +1 })
             this.fireEvent('change' , 'count' , this.state.count)
         }
-    
+
         SubCount(){
             this.setState({count : this.state.count - 1 })
             this.fireEvent('change' , 'count' , this.state.count)
         }
-    
-    
-    
-    
+
+
+
+
         Style(){
             return ''
         }
-    
-    
+
+
     }
-    
-    
+
+
     Tag('dm-counter' , Counter)
-    
+
 
 </textarea>
 
@@ -272,7 +272,7 @@ console.log(document.getElementById('countDown').getState())
 
 
     <textarea class="hidden" id="Templating" title="Micro Templating">
-    import { html, Tag, Component } from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+    import { html, Tag, Component } from 'https://cdn.jsdelivr.net/npm/componentforge';
 
 
     export default class AutoComplete extends Component {
@@ -289,9 +289,9 @@ console.log(document.getElementById('countDown').getState())
                 mincharAjax: 3,
                 url: null,
                 inputClass: 'dm-textbox',
-                
-    
-    
+
+
+
             }
             super(true, _props)
         }
@@ -303,13 +303,13 @@ console.log(document.getElementById('countDown').getState())
             the text field element and an array of possible autocompleted values:*/
             var currentFocus;
             const template = (rec, _tempStr) => {
-    
-    
+
+
                 let _template = _tempStr;
-    
+
                 //Get Child
                 const gc = (key, item) => {
-                  
+
                     let retItem = item;
                     const keys = key.split('.');
                     for (const _key of keys) {
@@ -317,31 +317,31 @@ console.log(document.getElementById('countDown').getState())
                         const newKey = split.length > 1 ? split[1] : split[0];
                         retItem = retItem[newKey]
                     }
-    
-    
+
+
                     return retItem;
                 }
                 const re = /{(.*?)}/g;
-    
+
                 const tkeys = _template.match(re)
-    
+
                 tkeys.forEach((k) => {
                     k = k.replace('{', '').replace('}', '')
                     if (k.indexOf('.') === -1)
                         _template = _template.replace(`{${k}}`, rec[k]);
                     else
                         _template = _template.replace(`{${k}}`, gc(k, rec))
-    
+
                 })
-    
+
                 return _template;
-    
+
             }
             /*execute a function when someone writes in the text field:*/
             inp.addEventListener("input", async function (e) {
                 e.preventDefault();
                 var a, b, i, val = this.value;
-              
+
                 if(val !== 0)
                     that.fireEvent('input', 'value', val)
                 /*close any already open lists of autocompleted values*/
@@ -370,7 +370,7 @@ console.log(document.getElementById('countDown').getState())
                         /*make the matching letters bold:*/
                         b.innerHTML = that.props.template != null ? that.Tmpl(arr[i], that.props.template).values[0] : "<strong>" + arr[i][that.props.textprop].substr(0, val.length) + "</strong>";
                         if (that.props.template == null) {
-    
+
                             b.innerHTML += arr[i][that.props.textprop].substr(val.length);
                         }
                         /*insert a input field that will hold the current array item's value:*/
@@ -453,27 +453,27 @@ console.log(document.getElementById('countDown').getState())
         <input id="myInput" autocomplete="off" class="${this.props.inputClass}" type="text"  placeholder="${this.props.placeholder}" />
         </div>
             `
-    
-    
+
+
         }
-    
+
         setAutoComplete(records) {
             this.inp = this.root.querySelector('#myInput');
             if (records) {
                 this.autocomplete(this.root.querySelector('#myInput'), records)
-    
+
             } else {
                 this.autocomplete(this.root.querySelector('#myInput'), this.props.records)
-    
+
             }
         }
-    
+
         ComponentDidMount() {
             setTimeout(() => {
                 this.setAutoComplete()
             }, 200);
         }
-    
+
         ComponentDidReceiedProps(attribute, oldValue, attrValue) {
             if (attribute === 'records') {
                 console.log(attrValue)
@@ -481,58 +481,58 @@ console.log(document.getElementById('countDown').getState())
                 console.log(this.inp);
                 this.inp.dispatchEvent(new Event("input"));
                 this.focus()
-    
+
             }
         }
-    
+
         get Value() {
-          
+
             return this.root.querySelector('#myInput').dataset.key
         }
-    
-    
 
-        
+
+
+
         set Value(val) {
             this.root.querySelector('#myInput').dataset.key = val;
         }
-    
+
         get text() {
             return this.root.querySelector('#myInput').value
         }
-    
+
         set text(val) {
             this.root.querySelector('#myInput').value = val;
         }
-    
+
         get name() {
             return this.root.querySelector('#myInput').name
         }
-    
+
         set name(val) {
             this.root.querySelector('#myInput').name = val;
         }
-    
+
         fucus() {
             this.inp.focus();
         }
-    
+
         Style() {
             return html`
-                    <style> 
+                    <style>
                     .dm-textbox {
-    
+
                         width: 350px;
                         height: 35px;
                         border: 1px solid grey;
                     }
-                    
+
                     .autocomplete {
                         /*the container must be positioned relative:*/
                         position: relative;
                         display: inline-block;
                     }
-                    
+
                     .autocomplete-items {
                         position: absolute;
                         border: 1px solid #d4d4d4;
@@ -544,19 +544,19 @@ console.log(document.getElementById('countDown').getState())
                         left: 0;
                         right: 0;
                     }
-                    
+
                     .autocomplete-items div {
                         padding: 10px;
                         cursor: pointer;
                         background-color: #fff;
                         border-bottom: 1px solid #d4d4d4;
                     }
-                    
+
                     .autocomplete-items div:hover {
                         /*when hovering an item:*/
                         background-color: #e9e9e9;
                     }
-                    
+
                     .autocomplete-active {
                         /*when navigating through the items using the arrow keys:*/
                         background-color: DodgerBlue !important;
@@ -564,13 +564,13 @@ console.log(document.getElementById('countDown').getState())
                     }
             </style>`
         }
-    
-    
-    
+
+
+
     }
-    
+
     Tag('dm-auto-complete', AutoComplete)
-    
+
 </textarea>
 
     <pre class="hidden" id="TemplatingHTML">
@@ -580,31 +580,31 @@ console.log(document.getElementById('countDown').getState())
     keyprop="username"
     placeholder="Users"
     template="{username} - {name} <br> {company.name}"
-  
+
     ></dm-auto-complete>`;
 </pre>
 
 
 
     <textarea class="hidden" id="AJAX" title="Built in Get and Post">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
 
 
 export default class Todos extends Component {
-  
+
     async ComponentDidMount(){
       const todos  = await this.get(this.props.url)
       console.log(todos)
       this.setState({todos})
       document.getElementById("result").remove()
     }
-  
+
     Template(){
         if(this.state.todos){
             return html`
               ${this.state.todos.map(t => {
                 return html`<div>
-                
+
                     ${t.title}
                     <hr>
                 </div>`
@@ -623,22 +623,22 @@ export default class Todos extends Component {
 
 
 Tag('cf-todos' , Todos)
-         
-    
-             
-        
+
+
+
+
 </textarea>
 
     <pre class="hidden noShow" id="AJAXHTML">
 
-    <cf-todos id="todos" 
+    <cf-todos id="todos"
     url="https://jsonplaceholder.typicode.com/todos"></cf-todos>
-    
+
 </pre>
 
 
     <textarea class="hidden" id="LifeCycle" title="Component Life Cycle">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
 
     export default class LifeCycle extends Component {
 
@@ -663,19 +663,19 @@ Tag('cf-todos' , Todos)
         Template(){
             return html`Hello ${this.props.name || 'world'}
             <br>
-            You are cool 
-            
+            You are cool
+
             `
         }
-    
+
         Style(){
             return ''
         }
     }
-    
-    
+
+
     Tag('cf-lifecycle' , LifeCycle)
-             
+
 
 
 </textarea>
@@ -696,16 +696,16 @@ setTimeout(() => {
     life.remove()
 } , 5000)
 
-    
+
 </pre>
 
     <textarea class="hidden" id="LoadExt" title="Load External css and js ">
-    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+    import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
 
 export default class JSONForm extends Component {
   jsonEditor = undefined;
   elementRef = null;
- 
+
 
 
  constructor() {
@@ -713,7 +713,7 @@ export default class JSONForm extends Component {
    schema : {},
    data: {},
    enabled : "true"
- }; 
+ };
   super(false,_props);
 
     this.state = {
@@ -727,7 +727,7 @@ export default class JSONForm extends Component {
         startval: this.props.data || {},
       },
     };
-  
+
   }
 
   set Value(val){
@@ -739,7 +739,7 @@ export default class JSONForm extends Component {
   get Value(){
     return this.jsonEditor.getValue();
   }
- 
+
   setUpEditor() {
     if (this.jsonEditor) {
       this.jsonEditor.destroy();
@@ -759,7 +759,7 @@ export default class JSONForm extends Component {
     });
     this.jsonEditor.on("ready", () => {
       // Now the api methods will be available
-      
+
       if (this.props.enabled !== 'true') {
         this.jsonEditor.disable();
       }
@@ -774,8 +774,8 @@ export default class JSONForm extends Component {
 
   initJsoneditor() {
     // destroy old JSONEditor instance if exists
-   
-    
+
+
     if (window.JSONEditor) {
       this.setUpEditor();
     } else {
@@ -793,7 +793,7 @@ export default class JSONForm extends Component {
   };
 
   ComponentDidReceiedProps(attribute, oldValue, attrValue){
-  
+
     if(attribute === 'schema'){
       var defaultval = this.state.defaultOptions;
       defaultval.schema = attrValue;
@@ -816,7 +816,7 @@ export default class JSONForm extends Component {
       "https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"
       );
 
-  
+
   }
 
   ComponentWillUnmount() {
@@ -824,7 +824,7 @@ export default class JSONForm extends Component {
       this.jsonEditor.destroy();
     }
   }
- 
+
   Template() {
     return html`<div id="jsonform"><h2>${this.props.title}</h2></div>`;
   }
@@ -833,13 +833,13 @@ export default class JSONForm extends Component {
     return html`
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" rel="stylesheet" />
-  
+
 `;
   }
 }
 Tag("dm-json-form", JSONForm);
 
-    
+
     </textarea>
 
     <pre id="LoadExtHTML" class="hidden noShow">
@@ -947,7 +947,7 @@ var defaultSchema = {
       },
     },
   };
-  
+
 
   var form = document.getElementById("form1");
   form.innerHTML =""
@@ -957,9 +957,9 @@ var defaultSchema = {
 
 
     <textarea class="hidden" id="AdvTmpl" title="Advanced templating">
-  
 
-        import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+
+        import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
 
 
 
@@ -1001,10 +1001,10 @@ export default class Select extends Component {
       } else {
         return html`
         <ul>
-        
+
           ${this.state.records.map(jet => html`<li>${jet.name} - ${jet.country}</li>`)}
         </ul>
-       
+
        `
       }
     }
@@ -1106,12 +1106,12 @@ Tag('dm-card', Card)
 </pre>
 
     <textarea class="hidden" id="Slots" title="Slots with Databinding (only componentforge)">
-      import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge@1.1.28';
+      import {Component , html , Tag} from 'https://cdn.jsdelivr.net/npm/componentforge';
 
 
 
     export default class Select extends Component {
-    
+
         constructor() {
             const _props = {
                 url: '',
@@ -1119,17 +1119,17 @@ Tag('dm-card', Card)
                 template: "",
                 name: "select"
             }
-    
+
             super(true, _props)
-    
+
             if (this.props.url === "") {
                 console.error("url is mandetory property")
             }
             console.log(this.props.child)
         }
-    
-    
-    
+
+
+
         async ComponentDidMount() {
             const records = await this.get(this.props.url)
             console.log(records)
@@ -1142,8 +1142,8 @@ Tag('dm-card', Card)
         }
         Template() {
             if (this.state.records) {
-    
-       
+
+
        return this.state.records.map(jet => {
             const radio = html`    <input type="radio" id="${this.props.id}"
             name="${this.props.name}" @change="${(e) => {
@@ -1151,7 +1151,7 @@ Tag('dm-card', Card)
                 jet.isSelected = e.target.checked;
                 this.setState({records : this.state.records})
             }}" value="${jet.name}" > ${jet.name}`;
-    
+
             return html`
                 <div>
                         <div>
@@ -1160,23 +1160,23 @@ Tag('dm-card', Card)
                 <div>
                     ${jet.isSelected === true ? html`<slot name="card" .jet=${jet}>Jet Should come here...</slot>` : ""}
                 </div>
-    
+
                 </div>
-            
+
             `
         })
-           
-                
+
+
             }
             return html`hello select`
         }
-    
+
         Style() {
             return html``
         }
     }
-    
-    
+
+
     export class Card extends Component {
         constructor() {
             const _props = {
@@ -1187,60 +1187,60 @@ Tag('dm-card', Card)
                     "image": "https://images05.military.com/sites/default/files/media/equipment/military-aircraft/f-18cd-hornet/2014/02/f-18cd-hornet_003.jpg"
                 }
             }
-    
+
             super(true, _props)
-    
-    
+
+
         }
-    
+
         Template() {
             const jet = this.props.jet
             console.warn(jet)
             debugger;
             return html`<div>
-    
+
         <b>${jet.name}</b>
         <br>
         <i>${jet.natoname}</i>
-    
+
         <span>${jet.country}</span>
         <hr>
-    
+
         <img class="jetImg" src="${jet.image}" title="${jet.name} Image" />
-    
+
         <div>`
         }
-    
+
         Style() {
             return html`<style>
         .jetImg{
           height:100px;
           width:100px;
         }
-    
+
         .flagImg{
           height:25px;
           width:25px;
         }
-    
+
     div{
       border: 1px dashed red;
       width:200px;
     }
-    
+
         </style>`
         }
-    
-    
+
+
     }
     Tag('dm-select', Select)
-    
+
     Tag('dm-card', Card)
-    
-    
+
+
     </textarea>
 <pre class="hidden noShow" id="SlotsHTML">
-  
+
 <dm-select url="https://nodeapi.collabmantra.com/jets">
   <dm-card  jet slot="card" />
 </dm-select>
