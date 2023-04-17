@@ -1,6 +1,6 @@
 {
   "name": "componentforge",
-  "version": "1.1.28",
+  "version": "1.1.29",
   "description": "A reactish web components / custom elements building library.",
   "main": "lib/component.js",
   "scripts": {
@@ -8,8 +8,8 @@
     "config": "tsc --showConfig",
     "prebuild": "npm-bump patch",
     "build": "tsc",
-    "minify" : "uglifyjs  ./lib/component.js -o ./lib/component.min.js --compress --mangle  ",
-    "postbuild" : "minify",
+    "minify": "uglifyjs  ./lib/component.js -o ./lib/component.min.js --compress --mangle  ",
+    "postbuild": "minify",
     "publish": "tsc"
   },
   "repository": {
