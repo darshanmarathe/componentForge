@@ -145,14 +145,14 @@ export abstract class Component extends HTMLElement {
    * @param {generate shadow DOM boolean} [shadow=true]
    * @param {default props to watch {}} [_props={}]
    */
-  constructor(shadow = true, _props = {}) {
+  constructor(shadow = true,_props = {} ) {
 
     super();
     if (this.Template === undefined && this.Style === undefined) {
       throw new Error("Template and Style functions are required....");
 
     }
- 
+
     if (Object.keys(_props).length > 0) {
       this.props = _props
     }
@@ -160,6 +160,7 @@ export abstract class Component extends HTMLElement {
 
       this.root = this.attachShadow({ mode: "open" });
     } else {
+      this.innerHTML = "";
       this.root = this;
     }
     this.BuildProps();
@@ -177,7 +178,7 @@ export abstract class Component extends HTMLElement {
     });
     setTimeout(() => {
       this.PreRender();
-this.GetSlots()
+      this.GetSlots()
     }, 100);
   }
 
@@ -185,17 +186,17 @@ this.GetSlots()
     this.slots = this.root.querySelectorAll('slot');
 
     this.slots.forEach((slot: any, index: number) => {
-      if(slot.hasAttribute('handled')) return;
+      if (slot.hasAttribute('handled')) return;
       let elem: any[] = slot.assignedNodes();
       if (elem.length > 0) {
         debugger;
         const keys = elem[0].getAttributeNames()
         for (const k of keys) {
-         if (['name', 'id', 'slot'].indexOf(k) > -1) continue;
+          if (['name', 'id', 'slot'].indexOf(k) > -1) continue;
           elem[0][k] = slot[k];
         }
-        slot.setAttribute("handled" , true)
-        
+        slot.setAttribute("handled", true)
+
       }
     })
   }
@@ -234,12 +235,10 @@ this.GetSlots()
 
   PreRender() {
     render(
-      html`${this.Style()}
-${this.Template()}`,
+      html`${this.Style()} ${this.Template()}`,
       this.root);
-    
-        this.GetSlots();
-   
+    this.GetSlots();
+
   }
 
   Tmpl(rec: any, _tempStr: string, elem: any = null) {
