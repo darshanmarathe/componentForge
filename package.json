@@ -17,14 +17,11 @@
     "url": "git+https://github.com/darshanmarathe/componentForge.git"
   },
   "keywords": [
-    "web",
-    "components/",
-    "custom",
-    "elements",
-    "/",
+    "web components",
+    "custom elements",
     "lit-html",
-    "/",
-    "react"
+    "react",
+    "react class component"
   ],
   "author": "Darshan Marathe",
   "license": "MIT ",
