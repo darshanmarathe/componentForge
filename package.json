@@ -11,7 +11,7 @@
     "minify": "uglifyjs  ./lib/component.js -o ./lib/component.min.js --compress --mangle  ",
     "postbuild": "npm run minify",
     "publish": "tsc",
-    "start": "cd web && node server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
