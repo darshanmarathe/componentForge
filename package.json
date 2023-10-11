@@ -1,15 +1,15 @@
 {
   "name": "componentforge",
-  "version": "1.1.31",
+  "version": "1.1.32",
   "description": "A reactish web components / custom elements building library.",
   "main": "lib/component.js",
   "scripts": {
     "dev": "tsc --watch",
     "config": "tsc --showConfig",
-    "prebuild": "npm-bump patch",
+    "bump": "npm-bump patch",
     "build": "tsc",
     "minify": "uglifyjs  ./lib/component.js -o ./lib/component.min.js --compress --mangle  ",
-    "postbuild": "minify",
+    "postbuild": "npm run minify",
     "publish": "tsc"
   },
   "repository": {
