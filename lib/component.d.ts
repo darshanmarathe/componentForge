@@ -1,4 +1,4 @@
-import { html } from 'lit-html';
+import { html } from 'https://cdn.jsdelivr.net/npm/lit-html@3.0.0/+esm';
 export declare abstract class Component extends HTMLElement {
     props: any;
     state: any;

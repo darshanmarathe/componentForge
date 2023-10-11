@@ -1,11 +1,11 @@
 // CDN Support
 // @ts-ignore
-// import { html, render } from 'https://unpkg.com/lit-html?module';
+import { html, render } from 'https://cdn.jsdelivr.net/npm/lit-html@3.0.0/+esm';
 // @ts-ignore
-// import { unsafeHTML } from 'https://unpkg.com/lit-html/directives/unsafe-html?module';
+import { unsafeHTML } from 'https://cdn.jsdelivr.net/npm/lit-html@3.0.0/directives/unsafe-html/+esm';
 
-import { html, render } from 'lit-html';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html';
+// import { html, render } from 'lit-html';
+// import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 
 //@sealed
 export abstract class Component extends HTMLElement {
