@@ -341,6 +341,10 @@ export abstract class Component extends HTMLElement {
  * @param  {string} tagName tag name
  */
 function Tag(tagName: string, target: any) {
+  if(tagName.indexOf('-') < 0){
+     console.error("tag name should have '-' for example my-tag, x-component");
+     throw new Error("tag name should have '-' for example my-tag, x-component");
+  }
 
   window.customElements.define(tagName, target);
 }

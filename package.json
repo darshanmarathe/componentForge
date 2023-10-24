@@ -7,6 +7,7 @@
     "dev": "tsc --watch",
     "config": "tsc --showConfig",
     "bump": "npm-bump patch",
+    "prebuild": "rimraf lib",
     "build": "tsc",
     "minify": "uglifyjs  ./lib/component.js -o ./lib/component.min.js --compress --mangle  ",
     "postbuild": "npm run minify",
@@ -32,11 +33,12 @@
   "homepage": "https://github.com/darshanmarathe/componentForge#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "lit-html": "^2.3.1"
+    "lit-html": "^3.0.0"
   },
   "devDependencies": {
-    "npm-bump": "^0.0.32",
-    "typescript": "^4.8.4",
+    "npm-bump": "^0.0.33",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.2.2",
     "uglify-js": "^3.17.4"
   }
 }
