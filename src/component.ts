@@ -202,30 +202,63 @@ export abstract class Component extends HTMLElement {
   }
 
   //make sure all props are in lower case
-  makeDynamicProps() {
-    if (this.props && Object.keys(this.props).length) {
-      // Loop through the observed attributes
-      Object.keys(this.props).forEach(attribute => {
-        // Dynamically define the property getter/setter
-        Object.defineProperty(this, attribute, {
-          get() { return this.getAttribute(attribute); },
-          set(attrValue) {
-            let oldValue = this.props[attribute];
-            console.log(attribute, oldValue, attrValue);
-            if (attrValue !== undefined) {
-              this.setAttribute(attribute, attrValue);
-              this.props[attribute] = attrValue;
-              if (oldValue !== attrValue)
-                this.PreRender();
-            } else {
-              this.removeAttribute(attribute);
+  // makeDynamicProps() {
+  //   if (this.props && Object.keys(this.props).length) {
+  //     // Loop through the observed attributes
+  //     Object.keys(this.props).forEach(attribute => {
+  //       // Dynamically define the property getter/setter
+  //       Object.defineProperty(this, attribute, {
+  //         get() { return this.getAttribute(attribute); },
+  //         set(attrValue) {
+  //           let oldValue = this.props[attribute];
+  //           console.log(attribute, oldValue, attrValue);
+  //           if (attrValue !== undefined) {
+  //             this.setAttribute(attribute, attrValue);
+  //             this.props[attribute] = attrValue;
+  //             if (oldValue !== attrValue)
+  //               this.PreRender();
+  //           } else {
+  //             this.removeAttribute(attribute);
+  //           }
+  //           this.ComponentDidReceiedProps && this.ComponentDidReceiedProps(attribute, oldValue, attrValue);
+  //         }
+  //       });
+  //     });
+  //   }
+  // }
+ //make sure all props are in lower case
+    makeDynamicProps() {
+        this.props && Object.keys(this.props).length && Object.keys(this.props).forEach(s => {
+            let proto = Object.getPrototypeOf(this);
+            let hasPrototypeSetter = false;
+            let currentProto = proto;
+            while (currentProto && currentProto !== HTMLElement.prototype) {
+                let desc = Object.getOwnPropertyDescriptor(currentProto, s);
+                if (desc && (desc.set || desc.get)) {
+                    hasPrototypeSetter = true;
+                    break;
+                }
+                currentProto = Object.getPrototypeOf(currentProto);
             }
-            this.ComponentDidReceiedProps && this.ComponentDidReceiedProps(attribute, oldValue, attrValue);
-          }
-        });
-      });
+            if (hasPrototypeSetter) {
+                return;
+            }
+
+            Object.defineProperty(this, s, {
+                get() {
+                    return this.getAttribute(s)
+                },
+                set(t) {
+                    var e = this.props[s];
+                    console.log(s, e, t),
+                    void 0 !== t ? (this.setAttribute(s, t),
+                    e !== (this.props[s] = t) && this.PreRender()) : this.removeAttribute(s),
+                    this.ComponentDidReceiedProps && this.ComponentDidReceiedProps(s, e, t)
+                }
+            })
+        }
+        )
     }
-  }
 
   setState(object: any, preRender = true, callback: (() => void) = () => { }) {
     this.state = Object.assign(this.state, object);
