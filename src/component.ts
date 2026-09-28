@@ -1,8 +1,8 @@
 // CDN Support
 // @ts-ignore
-import { html, render } from 'https://cdn.jsdelivr.net/npm/lit-html@3.0.0/+esm';
+import { html, render } from 'https://cdn.jsdelivr.net/npm/lit-html@3.3.3/+esm';
 // @ts-ignore
-import { unsafeHTML } from 'https://cdn.jsdelivr.net/npm/lit-html@3.0.0/directives/unsafe-html/+esm';
+import { unsafeHTML } from 'https://cdn.jsdelivr.net/npm/lit-html@3.3.3/directives/unsafe-html/+esm';
 
 // import { html, render } from 'lit-html';
 // import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
